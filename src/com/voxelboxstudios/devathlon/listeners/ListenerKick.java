@@ -11,7 +11,7 @@ public class ListenerKick implements Listener {
 	
 	@EventHandler
 	public void onKick(PlayerKickEvent e) {
-		e.setLeaveMessage("§8» §6" + e.getPlayer().getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "].");
+		e.setLeaveMessage("§8» §6" + e.getPlayer().getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
 	}
 	
 }

@@ -33,7 +33,7 @@ public class ListenerJoin implements Listener {
 		
 		/** Join message **/
 		
-		e.setJoinMessage("§8» §6" + p.getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "].");
+		e.setJoinMessage("§8» §6" + p.getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
 		
 		
 		/** Clear inventory **/
@@ -73,7 +73,7 @@ public class ListenerJoin implements Listener {
 			
 			/** Item **/
 			
-			p.getInventory().addItem(ItemUtil.getItemStack(Material.BOOK, "§6Team Auswahl §7<Rechts-Klick>"));
+			p.getInventory().addItem(ItemUtil.getItemStack(Material.BOOK, "§6Team Auswahl §7<Rechts-Klick>", (short) 0));
 			
 			
 			/** Teleport **/

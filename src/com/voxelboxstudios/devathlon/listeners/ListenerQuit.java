@@ -11,7 +11,7 @@ public class ListenerQuit implements Listener {
 	
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
-		e.setQuitMessage("§8» §6" + e.getPlayer().getName() + " §7hat das Spiel verlassens §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "].");
+		e.setQuitMessage("§8» §6" + e.getPlayer().getName() + " §7hat das Spiel verlassens §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
 	}
 	
 }

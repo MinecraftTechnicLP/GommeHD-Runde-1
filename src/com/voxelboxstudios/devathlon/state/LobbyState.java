@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.config.GameConfiguration;
+import com.voxelboxstudios.devathlon.team.TeamSelection;
 
 public class LobbyState {
 	
@@ -39,9 +40,14 @@ public class LobbyState {
 		Main.setState(GameState.LOBBY);
 		
 		
+		/** Team selection **/
+		
+		TeamSelection.setup();
+		
+		
 		/** Location **/
 		
-		location = ((GameConfiguration) Main.getPlugin().getConfig()).getLocation("lobby.position");
+		location = GameConfiguration.getLocation(Main.getPlugin().getConfig(), "lobby.position");
 		
 		
 		/** Time **/
@@ -82,7 +88,7 @@ public class LobbyState {
 				if(currenttime % 15 == 0 || currenttime <= 5) {
 					/** Broadcast **/
 					
-					Bukkit.broadcastMessage(Main.prefix + "Das Spiel beginnt in §6" + currenttime + " Sekunden§7.");
+					Bukkit.broadcastMessage(Main.prefix + "Das Spiel beginnt in §e" + currenttime + " Sekunden§7.");
 					
 					
 					for(Player p : Bukkit.getOnlinePlayers()) {
@@ -118,7 +124,7 @@ public class LobbyState {
 						
 						/** Broadcast **/
 						
-						Bukkit.broadcastMessage(Main.prefix + "Es fehlen noch §6" + (minimalplayers - Bukkit.getOnlinePlayers().size()) + " §7Spieler!");
+						Bukkit.broadcastMessage(Main.prefix + "Es fehlen noch §e" + (minimalplayers - Bukkit.getOnlinePlayers().size()) + " §7Spieler!");
 						
 						
 						/** Set level and exp **/
