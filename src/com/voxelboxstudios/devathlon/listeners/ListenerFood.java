@@ -9,7 +9,7 @@ public class ListenerFood implements Listener {
 	/** Food level change **/
 	
 	@EventHandler
-	public void onChage(FoodLevelChangeEvent e) {
+	public void onChange(FoodLevelChangeEvent e) {
 		e.setFoodLevel(20);
 	}
 	

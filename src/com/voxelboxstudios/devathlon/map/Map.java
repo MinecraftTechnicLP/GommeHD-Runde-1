@@ -31,9 +31,14 @@ public class Map {
 	private Location spectator;
 	
 	
+	/** Shop **/
+	
+	private Location shop;
+	
+	
 	/** Constructor **/
 	
-	public Map(String name, Location spectator) {
+	public Map(String name, Location spectator, Location shop) {
 		/** Name **/
 		
 		this.name = name;
@@ -44,10 +49,22 @@ public class Map {
 		this.spectator = spectator;
 		
 		
+		/** Shop **/
+		
+		this.shop = shop;
+		
+		
 		/** Positions **/
 		
 		positions = new HashMap<Team, Location>();
 		outstandingpositions = new HashMap<Team, Location>();
+	}
+	
+	
+	/** Get shop **/
+	
+	public Location getShop() {
+		return shop;
 	}
 	
 	
@@ -106,22 +123,24 @@ public class Map {
 				
 				/** Locations **/
 				
-				Location blue = Locations.parseLocation(rs.getString(2));
-				Location red = Locations.parseLocation(rs.getString(3));
-				Location green = Locations.parseLocation(rs.getString(4));
-				Location yellow = Locations.parseLocation(rs.getString(5));
+				Location blue = Locations.parseLocation(rs.getString(3));
+				Location red = Locations.parseLocation(rs.getString(4));
+				Location green = Locations.parseLocation(rs.getString(5));
+				Location yellow = Locations.parseLocation(rs.getString(6));
 				
-				Location spectator = Locations.parseLocation(rs.getString(6));
+				Location spectator = Locations.parseLocation(rs.getString(7));
 				
-				Location blueoutside = Locations.parseLocation(rs.getString(7));
-				Location redoutside = Locations.parseLocation(rs.getString(8));
-				Location greenoutside = Locations.parseLocation(rs.getString(9));
-				Location yellowoutside = Locations.parseLocation(rs.getString(10));
+				Location blueoutside = Locations.parseLocation(rs.getString(8));
+				Location redoutside = Locations.parseLocation(rs.getString(9));
+				Location greenoutside = Locations.parseLocation(rs.getString(10));
+				Location yellowoutside = Locations.parseLocation(rs.getString(11));
+				
+				Location shop = Locations.parseLocation(rs.getString(12));
 				
 				
 				/** Map **/
 				
-				Map map = new Map(name, spectator);
+				Map map = new Map(name, spectator, shop);
 				
 				
 				/** Locations **/

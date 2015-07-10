@@ -46,6 +46,7 @@ public class CommandMap implements CommandExecutor {
 			p.sendMessage("§8» §7Map Spawn setzen: §e/map setspawn <Name> <RED/GREEN/BLUE/YELLOW>");
 			p.sendMessage("§8» §7Map Außenspawn setzen: §e/map setoutsidespawn <Name> <RED/GREEN/BLUE/YELLOW>");
 			p.sendMessage("§8» §7Map Spectator setzen: §e/map setspectator <Name>");
+			p.sendMessage("§8» §7Map Shop setzen: §e/map setshop <Name>");
 			p.sendMessage("§6§m---------------------------------");
 		}
 		
@@ -74,7 +75,7 @@ public class CommandMap implements CommandExecutor {
 				
 				try {
 					while(rs.next()) {
-						p.sendMessage("  §8» §e" + rs.getString(1));
+						p.sendMessage("  §8» §e" + rs.getString(2));
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -97,7 +98,7 @@ public class CommandMap implements CommandExecutor {
 				/** Insert **/
 				
 				try {
-					SQL.getDatabase().queryUpdate("INSERT INTO " + SQL.prefix + "maps (name) VALUES (" + name + ")");
+					SQL.getDatabase().queryUpdate("INSERT INTO " + SQL.prefix + "maps (name) VALUES ('" + name + "')");
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -129,6 +130,29 @@ public class CommandMap implements CommandExecutor {
 				/** Send message */
 					
 				p.sendMessage(Main.prefix + "Zuschauer Änderung vorgenommen.");
+			}
+			
+			
+			/** Set shop **/
+			
+			if(args[0].equalsIgnoreCase("setshop")) {
+				/** Name **/
+				
+				String name = args[1];
+			
+				
+				/** Update **/
+					
+				try {
+					SQL.getDatabase().queryUpdate("UPDATE " + SQL.prefix + "maps SET shop='" + getLocation(p.getLocation()) + "' WHERE name='" + name + "'");
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+					
+					
+				/** Send message */
+					
+				p.sendMessage(Main.prefix + "Shop Änderung vorgenommen.");
 			}
 		}
 		

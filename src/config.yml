@@ -1,3 +1,10 @@
+respawntime:
+     STONE: 1
+     IRON_ORE: 10
+     COAL_ORE: 5
+     DIAMOND_ORE: 30
+     GOLD_ORE: 20
+     LOG: 5
 lobby:
      time: 60
      minimal-players: 8

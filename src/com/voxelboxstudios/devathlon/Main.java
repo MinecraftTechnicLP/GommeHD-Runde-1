@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.voxelboxstudios.devathlon.blocks.Blocks;
 import com.voxelboxstudios.devathlon.commands.*;
 import com.voxelboxstudios.devathlon.listeners.*;
 import com.voxelboxstudios.devathlon.map.Map;
@@ -76,6 +77,8 @@ public class Main extends JavaPlugin {
 		
 		/** Check map **/
 		
+		getCommand("map").setExecutor(new CommandMap());
+		
 		if(map == null) {
 			/** Print **/
 			
@@ -108,12 +111,18 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerClick(), plugin);
 		pm.registerEvents(new ListenerDrop(), plugin);
 		pm.registerEvents(new ListenerInteract(), plugin);
+		pm.registerEvents(new ListenerChat(), plugin);
+		pm.registerEvents(new ListenerRespawn(), plugin);
 		
 		
 		/** Commands **/
 		
 		getCommand("stats").setExecutor(new CommandStats());
-		getCommand("map").setExecutor(new CommandMap());
+		
+		
+		/** Respawn time **/
+		
+		Blocks.load();
 		
 		
 		/** Lobby state **/
