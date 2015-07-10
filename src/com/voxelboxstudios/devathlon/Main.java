@@ -70,14 +70,15 @@ public class Main extends JavaPlugin {
 		}
 		
 		
+		/** Check map **/
+		
+		getCommand("map").setExecutor(new CommandMap());
+		
+		
 		/** Map **/
 		
 		map = Map.random();
 		
-		
-		/** Check map **/
-		
-		getCommand("map").setExecutor(new CommandMap());
 		
 		if(map == null) {
 			/** Print **/

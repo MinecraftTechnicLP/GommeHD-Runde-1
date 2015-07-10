@@ -49,7 +49,9 @@ public class ListenerClick implements Listener {
 			/** Remove **/
 			
 			for(ItemStack other : inv.getContents()) {
-				other.getItemMeta().getLore().remove("§7" + p.getName());	
+				if(other.getItemMeta().getLore().contains("§7" + p.getName())) {
+					other.getItemMeta().getLore().remove("§7" + p.getName());	
+				}
 			}
 			
 			

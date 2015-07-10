@@ -46,7 +46,7 @@ public class CommandMap implements CommandExecutor {
 			p.sendMessage("§8» §7Map Spawn setzen: §e/map setspawn <Name> <RED/GREEN/BLUE/YELLOW>");
 			p.sendMessage("§8» §7Map Außenspawn setzen: §e/map setoutsidespawn <Name> <RED/GREEN/BLUE/YELLOW>");
 			p.sendMessage("§8» §7Map Spectator setzen: §e/map setspectator <Name>");
-			p.sendMessage("§8» §7Map Shop setzen: §e/map setshop <Name>");
+			p.sendMessage("§8» §7Map Shop setzen: §e/map setshop <Name> <RED/GREEN/BLUE/YELLOW>");
 			p.sendMessage("§6§m---------------------------------");
 		}
 		
@@ -131,33 +131,10 @@ public class CommandMap implements CommandExecutor {
 					
 				p.sendMessage(Main.prefix + "Zuschauer Änderung vorgenommen.");
 			}
-			
-			
-			/** Set shop **/
-			
-			if(args[0].equalsIgnoreCase("setshop")) {
-				/** Name **/
-				
-				String name = args[1];
-			
-				
-				/** Update **/
-					
-				try {
-					SQL.getDatabase().queryUpdate("UPDATE " + SQL.prefix + "maps SET shop='" + getLocation(p.getLocation()) + "' WHERE name='" + name + "'");
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-					
-					
-				/** Send message */
-					
-				p.sendMessage(Main.prefix + "Shop Änderung vorgenommen.");
-			}
 		}
 		
 		if(args.length == 3) {
-			if(args[0].equalsIgnoreCase("setspawn") || args[0].equalsIgnoreCase("setoutsidespawn")) {
+			if(args[0].equalsIgnoreCase("setspawn") || args[0].equalsIgnoreCase("setoutsidespawn") || args[0].equalsIgnoreCase("setshop")) {
 				/** Name **/
 				
 				String name = args[1];
@@ -177,6 +154,8 @@ public class CommandMap implements CommandExecutor {
 					/** Team **/
 					
 					String t = args[0].equalsIgnoreCase("setspawn") ? team.toLowerCase() : team.toLowerCase() + "outside";
+					
+					if(args[0].equalsIgnoreCase("setshop")) t = team.toLowerCase() + "shop";
 					
 					
 					/** Update **/

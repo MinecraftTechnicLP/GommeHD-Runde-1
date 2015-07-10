@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.state.GameState;
 import com.voxelboxstudios.devathlon.state.IngameState;
@@ -26,6 +27,13 @@ public class ListenerDamage implements Listener {
 				/** Player **/
 				
 				Player p = (Player) e.getEntity();
+				
+				
+				/** Spectator **/
+				
+				if(Game.spectators.contains(p.getName())) {
+					e.setCancelled(true);
+				}
 				
 				
 				/** Ingame **/

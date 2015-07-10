@@ -1,5 +1,7 @@
 package com.voxelboxstudios.devathlon.items;
 
+import java.util.List;
+
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -11,7 +13,7 @@ public class ItemUtil {
 
 	/** Short item stack **/
 	
-	public static ItemStack getItemStack(Material material, String name, short data) {
+	public static ItemStack getItemStack(Material material, String name, short data, List<String> lore) {
 		/** ItemStack **/
 		
 		ItemStack is = new ItemStack(material, 1, data);
@@ -20,6 +22,11 @@ public class ItemUtil {
 		/** Item meta **/
 		
 		ItemMeta im = is.getItemMeta();
+		
+		
+		/** Lore **/
+		
+		im.setLore(lore);
 		
 		
 		/** Item flags **/
@@ -42,10 +49,10 @@ public class ItemUtil {
 		return is;
 	}
 
-	public static ItemStack getLeatherItemStack(Material material, String name, short data, Color color) {
+	public static ItemStack getLeatherItemStack(Material material, String name, short data, Color color, List<String> lore) {
 		/** Item Stack **/
 		
-		ItemStack is = getItemStack(material, name, data);
+		ItemStack is = getItemStack(material, name, data, lore);
 		
 		
 		/** Item meta **/

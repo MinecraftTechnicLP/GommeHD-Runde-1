@@ -19,6 +19,7 @@ public class Map {
 	
 	private java.util.Map<Team, Location> positions;
 	private java.util.Map<Team, Location> outstandingpositions;
+	private java.util.Map<Team, Location> shoppositions;
 	
 
 	/** Name **/
@@ -31,14 +32,9 @@ public class Map {
 	private Location spectator;
 	
 	
-	/** Shop **/
-	
-	private Location shop;
-	
-	
 	/** Constructor **/
 	
-	public Map(String name, Location spectator, Location shop) {
+	public Map(String name, Location spectator) {
 		/** Name **/
 		
 		this.name = name;
@@ -49,22 +45,11 @@ public class Map {
 		this.spectator = spectator;
 		
 		
-		/** Shop **/
-		
-		this.shop = shop;
-		
-		
 		/** Positions **/
 		
 		positions = new HashMap<Team, Location>();
 		outstandingpositions = new HashMap<Team, Location>();
-	}
-	
-	
-	/** Get shop **/
-	
-	public Location getShop() {
-		return shop;
+		shoppositions = new HashMap<Team, Location>();
 	}
 	
 	
@@ -90,6 +75,10 @@ public class Map {
 	
 	public java.util.Map<Team, Location> getOutstandingPositions() {
 		return outstandingpositions;
+	}
+	
+	public java.util.Map<Team, Location> getShopPositions() {
+		return shoppositions;
 	}
 	
 
@@ -118,7 +107,7 @@ public class Map {
 			while(rs.next()) {
 				/** Name **/
 				
-				String name = rs.getString(1);
+				String name = rs.getString(2);
 				
 				
 				/** Locations **/
@@ -135,12 +124,15 @@ public class Map {
 				Location greenoutside = Locations.parseLocation(rs.getString(10));
 				Location yellowoutside = Locations.parseLocation(rs.getString(11));
 				
-				Location shop = Locations.parseLocation(rs.getString(12));
+				Location blueshop = Locations.parseLocation(rs.getString(12));
+				Location redshop = Locations.parseLocation(rs.getString(13));
+				Location greenshop = Locations.parseLocation(rs.getString(14));
+				Location yellowshop = Locations.parseLocation(rs.getString(15));
 				
 				
 				/** Map **/
 				
-				Map map = new Map(name, spectator, shop);
+				Map map = new Map(name, spectator);
 				
 				
 				/** Locations **/
@@ -154,6 +146,11 @@ public class Map {
 				map.getOutstandingPositions().put(Team.RED, redoutside);
 				map.getOutstandingPositions().put(Team.GREEN, greenoutside);
 				map.getOutstandingPositions().put(Team.YELLOW, yellowoutside);
+				
+				map.getShopPositions().put(Team.BLUE, blueshop);
+				map.getShopPositions().put(Team.RED, redshop);
+				map.getShopPositions().put(Team.GREEN, greenshop);
+				map.getShopPositions().put(Team.YELLOW, yellowshop);
 				
 				
 				/** Add to maps **/

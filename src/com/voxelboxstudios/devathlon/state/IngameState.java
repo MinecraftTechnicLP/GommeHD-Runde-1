@@ -9,6 +9,7 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.Main;
@@ -23,6 +24,9 @@ public class IngameState {
 	
 	public static Map<String, Team> team = new HashMap<String, Team>();
 	
+	/** Potions Countdown **/
+	
+	public static Map<Team, Integer> potions_cooldown = new HashMap<Team, Integer>();
 	
 	/** Arenas **/
 	
@@ -148,8 +152,8 @@ public class IngameState {
 			/** Items **/
 			
 			if(!arenas.contains(p)) {
-				p.getInventory().addItem(ItemUtil.getItemStack(Material.WOOD_PICKAXE, "§eSpitzhacke", (short) 0));
-				p.getInventory().addItem(ItemUtil.getItemStack(Material.WOOD_AXE, "§eAxt", (short) 0));
+				p.getInventory().addItem(ItemUtil.getItemStack(Material.WOOD_PICKAXE, "§eSpitzhacke", (short) 0, null));
+				p.getInventory().addItem(ItemUtil.getItemStack(Material.WOOD_AXE, "§eAxt", (short) 0, null));
 			}
 			
 			
@@ -169,6 +173,14 @@ public class IngameState {
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			Scoreboards.update(p);
 		}
+
+		/** Game Scheduler **/
+
+		new BukkitRunnable() {
+			public void run() {
+
+			}
+		}.runTaskTimer(Main.getPlugin(), 0L, 20L);
 	}
 	
 }

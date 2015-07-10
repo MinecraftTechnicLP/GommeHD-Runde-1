@@ -50,7 +50,7 @@ public class SQL {
 		/** Create tables **/
 		
 		db.queryUpdate("CREATE TABLE IF NOT EXISTS " + prefix + "stats (uuid VARCHAR(100), kills INT, deaths INT, wins INT, gamesplayed INT)");
-		db.queryUpdate("CREATE TABLE IF NOT EXISTS " + prefix + "maps (id int AUTO_INCREMENT primary key NOT NULL, name VARCHAR(100), blue VARCHAR(100), red VARCHAR(100), green VARCHAR(100), yellow VARCHAR(100), spectator VARCHAR(100), blueoutside VARCHAR(100), redoutside VARCHAR(100), greenoutside VARCHAR(100), yellowoutside VARCHAR(100), shop VARCHAR(100))");
+		db.queryUpdate("CREATE TABLE IF NOT EXISTS " + prefix + "maps (id int AUTO_INCREMENT primary key NOT NULL, name VARCHAR(100), blue VARCHAR(100), red VARCHAR(100), green VARCHAR(100), yellow VARCHAR(100), spectator VARCHAR(100), blueoutside VARCHAR(100), redoutside VARCHAR(100), greenoutside VARCHAR(100), yellowoutside VARCHAR(100), blueshop VARCHAR(100), redshop VARCHAR(100), greenshop VARCHAR(100), yellowshop VARCHAR(100))");
 	}
 	
 	

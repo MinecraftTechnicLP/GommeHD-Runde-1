@@ -18,7 +18,7 @@ public class Worlds {
 			
 			/** Time **/
 			
-			w.setTime(0);
+			w.setTime(15000);
 			
 			
 			/** Set weather **/

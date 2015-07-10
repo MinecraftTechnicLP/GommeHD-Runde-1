@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.items.ItemUtil;
 import com.voxelboxstudios.devathlon.scoreboard.Scoreboards;
@@ -42,6 +43,11 @@ public class ListenerJoin implements Listener {
 		p.getInventory().clear();
 		
 		
+		/** Armor content **/
+		
+		p.getInventory().setArmorContents(null);
+		
+		
 		/** Potions **/
 		
 		for(PotionEffect pe : p.getActivePotionEffects()) {
@@ -52,6 +58,11 @@ public class ListenerJoin implements Listener {
 		/** Set health **/
 		
 		p.setHealth(20.0D);
+		
+		
+		/** Max health **/
+		
+		p.setMaxHealth(20.0D);
 		
 		
 		/** Set foodlevel **/
@@ -74,7 +85,7 @@ public class ListenerJoin implements Listener {
 			
 			/** Item **/
 			
-			p.getInventory().addItem(ItemUtil.getItemStack(Material.BOOK, "§6Team Auswahl §7<Rechts-Klick>", (short) 0));
+			p.getInventory().addItem(ItemUtil.getItemStack(Material.BOOK, "§6Team Auswahl §7<Rechts-Klick>", (short) 0, null));
 			
 			
 			/** Teleport **/
@@ -85,6 +96,30 @@ public class ListenerJoin implements Listener {
 			/** Scoreboard **/
 			
 			Scoreboards.update(p);
+		} else {
+			/** Spectator **/
+			
+			if(!Game.spectators.contains(p.getName())) {
+				/** Add as spectator **/
+				
+				Game.spectators.add(p.getName());
+				
+				
+				/** Set fly **/
+				
+				p.setAllowFlight(true);
+				
+				
+				/** Hide **/
+				
+				for(Player t : Bukkit.getOnlinePlayers()) {
+					t.hidePlayer(p);
+					
+					if(Game.spectators.contains(t.getName())) {
+						p.hidePlayer(p);
+					}
+				}
+			}
 		}
 	}
 	

@@ -19,8 +19,8 @@ public class Game {
 	
 	/** Spectators **/
 	
-	public static List<Player> spectators = new ArrayList<Player>();
-	
+	public static List<String> spectators = new ArrayList<String>();
+
 	
 	/** Death **/
 	
