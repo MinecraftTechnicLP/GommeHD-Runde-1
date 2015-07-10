@@ -5,3 +5,5 @@ author: VoxelBoxStudios
 commands:
      stats:
           description: Stats
+     map:
+          description: Map

@@ -160,4 +160,11 @@ public class LobbyState {
 	public static Location getLocation() {
 		return location;
 	}
+	
+	
+	/** Get minimal players **/
+	
+	public static int getMinimalPlayers() {
+		return minimalplayers;
+	}
 }

@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.items.ItemUtil;
+import com.voxelboxstudios.devathlon.scoreboard.Scoreboards;
 import com.voxelboxstudios.devathlon.state.GameState;
 import com.voxelboxstudios.devathlon.state.LobbyState;
 import com.voxelboxstudios.devathlon.stats.Stats;
@@ -79,6 +80,11 @@ public class ListenerJoin implements Listener {
 			/** Teleport **/
 			
 			p.teleport(LobbyState.getLocation());
+			
+			
+			/** Scoreboard **/
+			
+			Scoreboards.update(p);
 		}
 	}
 	

@@ -6,9 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.voxelboxstudios.devathlon.commands.CommandStats;
+import com.voxelboxstudios.devathlon.commands.*;
 import com.voxelboxstudios.devathlon.listeners.*;
-
+import com.voxelboxstudios.devathlon.map.Map;
 import com.voxelboxstudios.devathlon.mysql.SQL;
 import com.voxelboxstudios.devathlon.state.GameState;
 import com.voxelboxstudios.devathlon.state.LobbyState;
@@ -23,6 +23,11 @@ public class Main extends JavaPlugin {
 	/** State **/
 	
 	public static GameState state;
+	
+	
+	/** Map **/
+	
+	private static Map map;
 	
 	
 	/** Prefix **/
@@ -64,6 +69,25 @@ public class Main extends JavaPlugin {
 		}
 		
 		
+		/** Map **/
+		
+		map = Map.random();
+		
+		
+		/** Check map **/
+		
+		if(map == null) {
+			/** Print **/
+			
+			Bukkit.getLogger().info("Keine Maps vorhanden! Bitte registriere eine erste Map.");
+			
+			
+			/** Return **/
+			
+			return;
+		}
+		
+		
 		/** Prepare worlds **/
 		
 		Worlds.prepare();
@@ -89,6 +113,7 @@ public class Main extends JavaPlugin {
 		/** Commands **/
 		
 		getCommand("stats").setExecutor(new CommandStats());
+		getCommand("map").setExecutor(new CommandMap());
 		
 		
 		/** Lobby state **/
@@ -115,6 +140,13 @@ public class Main extends JavaPlugin {
 	
 	public static void setState(GameState s) {
 		state = s;
+	}
+	
+	
+	/** Get map **/
+	
+	public static Map getMap() {
+		return map;
 	}
 	
 }

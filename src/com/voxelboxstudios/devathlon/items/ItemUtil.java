@@ -53,6 +53,11 @@ public class ItemUtil {
 		LeatherArmorMeta meta = (LeatherArmorMeta) is.getItemMeta();
 		
 		
+		/** Item flags **/
+		
+		meta.addItemFlags(ItemFlag.values());
+		
+		
 		/** Set color **/
 		
 		meta.setColor(color);
