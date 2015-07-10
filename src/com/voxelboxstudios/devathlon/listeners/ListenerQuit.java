@@ -23,6 +23,13 @@ public class ListenerQuit implements Listener {
 			e.setQuitMessage("§8» " + IngameState.team.get(e.getPlayer().getName()).getChatColor() + e.getPlayer().getName() + " §7hat das Spiel verlassen.");
 		
 		
+		/** Spectators **/
+		
+		if(Game.spectators.contains(e.getPlayer().getName())) {
+			e.setQuitMessage(null);
+		}
+		
+		
 		/** Death **/
 		
 		if(Main.getState() == GameState.INGAME) Game.death(e.getPlayer());

@@ -17,6 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.Main;
+import com.voxelboxstudios.devathlon.hologram.ArmorStandManager;
 import com.voxelboxstudios.devathlon.mysql.SQL;
 import com.voxelboxstudios.devathlon.scoreboard.Scoreboards;
 import com.voxelboxstudios.devathlon.stats.Stats;
@@ -37,11 +38,13 @@ public class IngameState {
 	
 	/** Arenas **/
 	
-	public static List<Player> arenas;
+	public static List<Player> arenas = new ArrayList<Player>();;
+	
 	
 	/** Safe Time **/
 	
 	public int buildtime = 30;
+	
 	
 	/** Constructor **/
 	
@@ -50,6 +53,9 @@ public class IngameState {
 		
 		setSpawnBlocks(Material.BARRIER);
 		
+		for(Team teams : Team.values()) {
+			ArmorStandManager.spawnArmorStand(Main.getMap().getShopPositions().get(teams), teams);
+		}
 		
 		/** Points **/
 		
@@ -75,17 +81,12 @@ public class IngameState {
 		
 		/** Teams **/
 		
-		Map<Player, Team> teams = Teams.calculate();
+		final Map<Player, Team> teams = Teams.calculate();
 		
 		
 		/** Players **/
 		
 		List<Player> players = new ArrayList<Player>(Bukkit.getOnlinePlayers());
-		
-		
-		/** Arena players **/
-		
-		arenas = new ArrayList<Player>();
 		
 		
 		/** Shuffle players **/
@@ -95,7 +96,7 @@ public class IngameState {
 		
 		/** Arena **/
 		
-		Map<Team, Player> arena = new HashMap<Team, Player>();
+		final Map<Team, Player> arena = new HashMap<Team, Player>();
 		
 		boolean red = false;
 		boolean blue = false;
@@ -174,7 +175,7 @@ public class IngameState {
 			
 			/** Teleport **/
 			
-			if(!arenas.contains(p)) p.teleport(Main.getMap().getOutstandingPositions().get(teams.get(p))); else p.teleport(Main.getMap().getPositions().get(teams.get(p)));
+			if(!arenas.contains(p)) p.teleport(Main.getMap().getOutstandingPositions().get(teams.get(p))); else p.teleport(Main.getMap().getOutstandingPositions().get(teams.get(p)).clone().add(0, 5, 0));
 			
 			
 			/** Put into map **/
@@ -196,7 +197,7 @@ public class IngameState {
 				
 				/** Gamemode **/
 				
-				p.setGameMode(GameMode.ADVENTURE);
+				p.setGameMode(GameMode.SPECTATOR);
 			} else {
 				/** Send messages **/
 				
@@ -205,6 +206,11 @@ public class IngameState {
 				p.sendMessage("§8» §7Du musst nun so lange Materialien für ");
 				p.sendMessage("§8» §e" + arena.get(teams.get(p)).getName() + " §7sammeln, bis du Kämpfer bist.");
 				p.sendMessage("§6§m---------------------------------");
+				
+				
+				/** Set gamemode **/
+				
+				p.setGameMode(GameMode.SURVIVAL);
 			}
 			
 			
@@ -236,7 +242,7 @@ public class IngameState {
 					
 					buildtime--;
 					
-					Bukkit.broadcastMessage(Main.prefix + "Das Bauzeit endet in §e" + buildtime + " Sekunden§7.");
+					if(buildtime % 5 == 0 || buildtime < 5) Bukkit.broadcastMessage(Main.prefix + "Die Bauzeit endet in §e" + buildtime + " Sekunden§7.");
 					
 					for(Player p : Bukkit.getOnlinePlayers()) {
 						/** Set level **/
@@ -247,10 +253,21 @@ public class IngameState {
 						
 						/** Play sound **/
 							
-						if(buildtime % 5 == 0) { 
+						if(buildtime % 5 == 0 || buildtime < 5) { 
 							/** Play sound **/
 							
 							p.playSound(p.getLocation(), Sound.NOTE_PLING, 1, 3);
+						}
+						
+						if(buildtime == 10 && arenas.contains(p)) {
+							/** Teleport **/
+							
+							p.teleport(Main.getMap().getPositions().get(teams.get(p)));
+							
+							
+							/** Set gamemode **/
+							
+							p.setGameMode(GameMode.ADVENTURE);
 						}
 					}
 				} else {
@@ -275,7 +292,7 @@ public class IngameState {
 						
 						/** GameMode **/
 						
-						p.setGameMode(GameMode.ADVENTURE);
+						if(arenas.contains(p)) p.setGameMode(GameMode.ADVENTURE);
 						
 						
 						/** Play sound **/

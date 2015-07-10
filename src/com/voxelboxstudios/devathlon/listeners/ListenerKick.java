@@ -20,6 +20,13 @@ public class ListenerKick implements Listener {
 		e.setLeaveMessage("§8» §6" + e.getPlayer().getName() + " §7hat das Spiel verlassen §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
 		
 		
+		/** Spectators **/
+		
+		if(Game.spectators.contains(e.getPlayer().getName())) {
+			e.setLeaveMessage(null);
+		}
+		
+		
 		/** Death **/
 		
 		if(Main.getState() == GameState.INGAME) Game.death(e.getPlayer());

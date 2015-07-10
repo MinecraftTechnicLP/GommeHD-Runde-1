@@ -119,6 +119,8 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerSoil(), plugin);
 		pm.registerEvents(new ListenerPickup(), plugin);
 		pm.registerEvents(new ListenerDamageByEntity(), plugin);
+		pm.registerEvents(new ListenerItemMove(), plugin);
+		pm.registerEvents(new ListenerHolding(), plugin);
 		
 		
 		/** Commands **/

@@ -4,7 +4,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.state.IngameState;
 import com.voxelboxstudios.devathlon.team.Team;
@@ -26,11 +25,6 @@ public class ListenerRespawn implements Listener {
 			/** Set respawn location **/
 			
 			e.setRespawnLocation(Main.getMap().getOutstandingPositions().get(t));
-			
-			
-			/** Builder inventory **/
-			
-			Game.builderInventory(e.getPlayer());
 		} else {
 			/** Set respawn location **/
 			

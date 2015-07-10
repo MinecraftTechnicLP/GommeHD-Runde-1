@@ -3,11 +3,11 @@ respawntime:
      IRON_ORE: 200
      COAL_ORE: 100
      DIAMOND_ORE: 600
-     GOLD_ORE: 20
+     GOLD_ORE: 200
      LOG: 100
-     GRAVEL: 20
      COBWEB: 100
-     LEAVES: 20
+     LEAVES: 80
+     LAPIS_ORE: 300
 lobby:
      time: 60
      minimal-players: 8

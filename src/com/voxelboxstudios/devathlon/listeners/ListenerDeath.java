@@ -19,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.mysql.SQL;
+import com.voxelboxstudios.devathlon.scoreboard.Scoreboards;
 import com.voxelboxstudios.devathlon.state.IngameState;
 import com.voxelboxstudios.devathlon.stats.Stats;
 import com.voxelboxstudios.devathlon.team.Team;
@@ -32,6 +33,11 @@ public class ListenerDeath implements Listener {
 	
 	@EventHandler
 	public void onDeath(final PlayerDeathEvent e) {
+		/** Keep inventory **/
+		
+		e.setKeepInventory(true);
+		
+		
 		/** Death message **/
 		
 		e.setDeathMessage(null);
@@ -80,19 +86,6 @@ public class ListenerDeath implements Listener {
 		/** Check if killer isn't null **/
 		
 		if(e.getEntity().getKiller() != null) {
-			
-			/** Stats **/
-			
-			for(Player p : Bukkit.getOnlinePlayers()){
-				if(!Game.spectators.contains(p.getName())){
-					
-					Team team = IngameState.team.get(p);
-						
-					if(team == IngameState.team.get(e.getEntity().getKiller().getName()));
-					
-				}
-			}
-			
 			/** Random kill message **/
 			
 			List<String> death_messages = new ArrayList<String>();
@@ -104,9 +97,6 @@ public class ListenerDeath implements Listener {
 			death_messages.add("getötet");
 			death_messages.add("pulverisiert");
 			death_messages.add("zermalmt");
-			death_messages.add("zerfickt");
-			death_messages.add("gemetzelt");
-			death_messages.add("rasiert");
 			
 			
 			/** Shuffle death messages **/
@@ -116,12 +106,21 @@ public class ListenerDeath implements Listener {
 			
 			/** Set death message **/
 			
-			Bukkit.broadcastMessage(IngameState.team.get(e.getEntity().getName()).getChatColor() + e.getEntity().getName() + " §7wurde von "+IngameState.team.get(e.getEntity().getKiller().getName()).getChatColor() + e.getEntity().getKiller().getName() + "§7 " + death_messages.get(0) + ".");
+			Bukkit.broadcastMessage("§8» " + IngameState.team.get(e.getEntity().getName()).getChatColor() + e.getEntity().getName() + " §7wurde von "+IngameState.team.get(e.getEntity().getKiller().getName()).getChatColor() + e.getEntity().getKiller().getName() + "§7 " + death_messages.get(0) + ".");
 			
 			
 			/** Check if killer is in a team **/
 			
 			if(IngameState.arenas.contains(e.getEntity().getKiller())) {
+				/** Team **/
+				
+				Team team = IngameState.team.get(e.getEntity().getKiller().getName());
+				
+				/** Add Point **/
+				
+				Game.points.put(team, Game.points.get(team) + 1);
+				
+				
 				/** Stats **/
 				
 				new BukkitRunnable() {
@@ -142,11 +141,16 @@ public class ListenerDeath implements Listener {
 				}.runTaskAsynchronously(Main.getPlugin());
 				
 				
-				/** Give team mining potion on kill **/
-				
-				Team team = IngameState.team.get(e.getEntity().getKiller().getName());
+				/** Loop trough players **/
 				
 				for(Player p : Bukkit.getOnlinePlayers()) {
+					/** Scoreboard **/
+					
+					Scoreboards.update(p);
+					
+					
+					/** Potions **/
+					
 					if(!Game.spectators.contains(p.getName())) {
 						if(p != e.getEntity().getKiller() && IngameState.team.get(p.getName()) == team) {
 							/** Add potion effect **/
@@ -165,7 +169,7 @@ public class ListenerDeath implements Listener {
 		} else {
 			/** Set death message **/
 			
-			Bukkit.broadcastMessage(IngameState.team.get(e.getEntity().getName()).getChatColor() + e.getEntity().getName() + " §7ist gestorben!");	
+			Bukkit.broadcastMessage("§8»" + IngameState.team.get(e.getEntity().getName()).getChatColor() + e.getEntity().getName() + " §7ist gestorben!");	
 		}
 	}
 	

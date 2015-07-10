@@ -97,6 +97,11 @@ public class ListenerJoin implements Listener {
 			
 			Scoreboards.update(p);
 		} else {
+			/** Join message **/
+			
+			e.setJoinMessage(null);
+			
+			
 			/** Spectator **/
 			
 			if(!Game.spectators.contains(p.getName())) {

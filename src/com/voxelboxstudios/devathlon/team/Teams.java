@@ -44,19 +44,18 @@ public class Teams {
 		
 		int i = 0;
 		
+		int state = 1;
+		
 		for(Player p : players) {
 			/** Put into hashmap **/
 			
 			teams.put(p, available_teams.get(i));
 			
-			
-			/** Get next team **/
-			
-			i++;
-			
-			if(i == available_teams.size()) {
-				i = 0;
+			if(state % 2 == 0) {
+				i++;
 			}
+			
+			state++;
 		}
 		
 		

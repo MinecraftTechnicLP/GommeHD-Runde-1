@@ -29,86 +29,104 @@ public class ListenerClick implements Listener {
 		
 		/** Team selection **/
 		
-		if(e.getClickedInventory().getName().contains("Team Auswahl")) {
-			/** Join Team **/
-			
-			Player p = (Player) e.getWhoClicked();
-			
-			
-			/** Item **/
-			
-			ItemStack item = e.getCurrentItem();
-			
-			if(item != null) {
-				if(item.hasItemMeta()) {
-					/** Inventory **/
+		if(e.getClickedInventory() != null) {
+			if(e.getClickedInventory().getName() != null) {
+				if(e.getClickedInventory().getName().contains("Team Auswahl")) {
+					/** Join Team **/
 					
-					Inventory inv = e.getClickedInventory();
+					Player p = (Player) e.getWhoClicked();
 					
 					
-					/** Close inventory **/
+					/** Item **/
 					
-					p.closeInventory();
+					ItemStack item = e.getCurrentItem();
 					
-					
-					/** Remove **/
-					
-					for(ItemStack other : inv.getContents()) {
-						if(other != null) {
-							if(other.hasItemMeta()) {
-								if(other.getItemMeta().getLore() != null) {
-									if(other.getItemMeta().getLore().contains("§7" + p.getName())) {
-										ItemMeta meta = other.getItemMeta();
-										List<String> lore = meta.getLore();
-										lore.remove("§7" + p.getName());
-										meta.setLore(lore);
+					if(item != null) {
+						if(item.hasItemMeta()) {
+							/** Inventory **/
+							
+							Inventory inv = e.getClickedInventory();
+							
+							if(item.getItemMeta().getLore() != null) {
+								if(item.getItemMeta().getLore().contains("§7" + p.getName())) {
+									p.sendMessage(Main.prefix + "Du bist bereits in diesem Team!");
+									return;
+								}
+								if(item.getItemMeta().getLore().size() == 2) {
+									p.sendMessage(Main.prefix + "Dieses Team ist bereits voll!");
+									return;
+								}
+							}
+							
+							
+							/** Close inventory **/
+							
+							p.closeInventory();
+							
+							
+							/** Remove **/
+							
+							for(ItemStack other : inv.getContents()) {
+								if(other != null) {
+									if(other.hasItemMeta()) {
+										if(other.getItemMeta().getLore() != null) {
+											if(other != item) {
+												if(other.getItemMeta().getLore().contains("§7" + p.getName())) {
+													ItemMeta meta = other.getItemMeta();
+													List<String> lore = meta.getLore();
+													lore.remove("§7" + p.getName());
+													meta.setLore(lore);
+													other.setItemMeta(meta);
+												}											
+											}
+										}
 									}
 								}
 							}
-						}
-					}
-					
-					
-					/** Lore **/
-					
-					ItemMeta meta = item.getItemMeta();
-					
-					if(meta.getLore() == null) {
-						meta.setLore(Arrays.asList("§7" + p.getName()));
-					} else {
-						List<String> lore = meta.getLore();
-						
-						if(!lore.contains("§7" + p.getName())) {
-							lore.add("§7" + p.getName());
-							meta.setLore(lore);
-						} else {
+							
+							
+							/** Lore **/
+							
+							ItemMeta meta = item.getItemMeta();
+							
+							if(meta.getLore() == null) {
+								meta.setLore(Arrays.asList("§7" + p.getName()));
+							} else {
+								List<String> lore = meta.getLore();
+								
+								if(!lore.contains("§7" + p.getName())) {
+									lore.add("§7" + p.getName());
+									meta.setLore(lore);
+								} else {
+									/** Send message **/
+									
+									p.sendMessage(Main.prefix + "Du bist bereits in diesem Team.");
+									
+								
+									/** Return **/
+									
+									return;							
+								}
+							}
+							
+							item.setItemMeta(meta);
+							
+							ItemStack helmet = item;
+							helmet.getItemMeta().getLore().clear();
+							
+							p.getInventory().setHelmet(helmet);
+							
+							
 							/** Send message **/
 							
-							p.sendMessage(Main.prefix + "Du bist bereits in diesem Team.");
+							p.sendMessage(Main.prefix + "Ausgewähltes Team: " + item.getItemMeta().getDisplayName());
 							
-						
-							/** Return **/
 							
-							return;							
+							/** Play sound **/
+							
+							p.playSound(p.getLocation(), Sound.NOTE_PLING, 1, 3);
 						}
 					}
-					
-					item.setItemMeta(meta);
-					
-					ItemStack helmet = item;
-					helmet.getItemMeta().getLore().clear();
-					
-					p.getInventory().setHelmet(helmet);
-					
-					
-					/** Send message **/
-					
-					p.sendMessage(Main.prefix + "Ausgewähltes Team: " + item.getItemMeta().getDisplayName());
-					
-					
-					/** Play sound **/
-					
-					p.playSound(p.getLocation(), Sound.NOTE_PLING, 1, 3);
 				}
 			}
 		}

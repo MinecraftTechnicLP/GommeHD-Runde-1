@@ -1,7 +1,6 @@
 package com.voxelboxstudios.devathlon.stats;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,9 +60,7 @@ public class Stats {
 				
 				stats.put(p.getName(), new Stats(kills, deaths, gamesplayed, wins));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 	}
 	
 	

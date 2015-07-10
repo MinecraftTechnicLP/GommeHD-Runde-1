@@ -88,7 +88,7 @@ public class LobbyState {
 				if(currenttime % 15 == 0 || currenttime <= 5) {
 					/** Broadcast **/
 					
-					Bukkit.broadcastMessage(Main.prefix + "Das Spiel beginnt in §e" + currenttime + " Sekunden§7.");
+					if(currenttime != 0) Bukkit.broadcastMessage(Main.prefix + "Das Spiel beginnt in §e" + currenttime + " Sekunden§7.");
 					
 					
 					for(Player p : Bukkit.getOnlinePlayers()) {

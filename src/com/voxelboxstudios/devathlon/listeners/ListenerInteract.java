@@ -43,6 +43,11 @@ public class ListenerInteract implements Listener {
 		if(!(e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR)) return;
 		
 		
+		/** Hopper **/
+		
+		if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.HOPPER) e.setCancelled(true);
+		
+		
 		/** Get random potion **/
 		
 		if(e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.BREWING_STAND) {	
