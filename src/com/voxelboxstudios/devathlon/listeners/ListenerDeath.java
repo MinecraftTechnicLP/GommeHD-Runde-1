@@ -32,6 +32,13 @@ public class ListenerDeath implements Listener {
 	
 	@EventHandler
 	public void onDeath(final PlayerDeathEvent e) {
+		/** Death message **/
+		
+		e.setDeathMessage(null);
+		
+		
+		/** Auto respawn **/
+		
 		new BukkitRunnable() {
 			  @Override
 			  public void run() {
@@ -49,7 +56,6 @@ public class ListenerDeath implements Listener {
 		/** Death **/
 		
 		Game.death(e.getEntity());
-		
 		
 		/** Stats **/
 		
@@ -74,6 +80,19 @@ public class ListenerDeath implements Listener {
 		/** Check if killer isn't null **/
 		
 		if(e.getEntity().getKiller() != null) {
+			
+			/** Stats **/
+			
+			for(Player p : Bukkit.getOnlinePlayers()){
+				if(!Game.spectators.contains(p.getName())){
+					
+					Team team = IngameState.team.get(p);
+						
+					if(team == IngameState.team.get(e.getEntity().getKiller().getName()));
+					
+				}
+			}
+			
 			/** Random kill message **/
 			
 			List<String> death_messages = new ArrayList<String>();
@@ -85,6 +104,9 @@ public class ListenerDeath implements Listener {
 			death_messages.add("getötet");
 			death_messages.add("pulverisiert");
 			death_messages.add("zermalmt");
+			death_messages.add("zerfickt");
+			death_messages.add("gemetzelt");
+			death_messages.add("rasiert");
 			
 			
 			/** Shuffle death messages **/

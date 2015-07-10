@@ -41,7 +41,7 @@ public class IngameState {
 	
 	/** Safe Time **/
 	
-	public boolean issafetime = true;
+	public int buildtime = 30;
 	
 	/** Constructor **/
 	
@@ -167,6 +167,11 @@ public class IngameState {
 			p.setExp(0f);
 			
 			
+			/** Armor content **/
+			
+			p.getInventory().setArmorContents(null);
+			
+			
 			/** Teleport **/
 			
 			if(!arenas.contains(p)) p.teleport(Main.getMap().getOutstandingPositions().get(teams.get(p))); else p.teleport(Main.getMap().getPositions().get(teams.get(p)));
@@ -187,6 +192,11 @@ public class IngameState {
 				p.sendMessage("§8» §7Du musst nun 30 Sekunden warten, bis das Spiel beginnt,");
 				p.sendMessage("§8» §7während deine Kameraden Materialien für dich sammeln.");
 				p.sendMessage("§6§m---------------------------------");
+				
+				
+				/** Gamemode **/
+				
+				p.setGameMode(GameMode.ADVENTURE);
 			} else {
 				/** Send messages **/
 				
@@ -220,24 +230,67 @@ public class IngameState {
 		/** Build Time **/
 
 		new BukkitRunnable() {
-			public void run() { 
-				/** Barriers **/
+			public void run() {
+				if(buildtime > 1) {
+					/** Subtract time **/
 					
-				setSpawnBlocks(Material.AIR);
+					buildtime--;
+					
+					Bukkit.broadcastMessage(Main.prefix + "Das Bauzeit endet in §e" + buildtime + " Sekunden§7.");
+					
+					for(Player p : Bukkit.getOnlinePlayers()) {
+						/** Set level **/
+						
+						p.setLevel(buildtime);
+						p.setExp((1f / 30) * buildtime);
+						
+						
+						/** Play sound **/
+							
+						if(buildtime % 5 == 0) { 
+							/** Play sound **/
+							
+							p.playSound(p.getLocation(), Sound.NOTE_PLING, 1, 3);
+						}
+					}
+				} else {
+					/** Barriers **/
+					
+					setSpawnBlocks(Material.AIR);
+						
+						
+					/** Broadcast **/
+						
+					Bukkit.broadcastMessage(Main.prefix + "Die Bauzeit ist beendet!");
 					
 					
-				/** Broadcast **/
+					/** Settings **/
 					
-				Bukkit.broadcastMessage(Main.prefix + "Die Schutzzeit ist beendet!");
-				
-				
-				/** Play sound **/
-				
-				for(Player p : Bukkit.getOnlinePlayers()) {
-					p.playSound(p.getLocation(), Sound.NOTE_PLING, 1, 1);
+					for(Player p : Bukkit.getOnlinePlayers()) {			
+						/** Set Level **/
+						
+						p.setLevel(0);
+						p.setExp(0);
+						
+						
+						/** GameMode **/
+						
+						p.setGameMode(GameMode.ADVENTURE);
+						
+						
+						/** Play sound **/
+						
+						p.playSound(p.getLocation(), Sound.LEVEL_UP, 1, 1);
+					}
+					
+					
+					/** Cancel **/
+					
+					cancel();
 				}
 			}
-		}.runTaskLater(Main.getPlugin(), 20L * 30);
+		}.runTaskTimer(Main.getPlugin(), 0L, 20L);
+		
 	}
 	
 	

@@ -4,6 +4,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import com.voxelboxstudios.devathlon.Game;
+import com.voxelboxstudios.devathlon.Main;
+import com.voxelboxstudios.devathlon.state.IngameState;
+import com.voxelboxstudios.devathlon.team.Team;
 
 public class ListenerRespawn implements Listener {
 
@@ -11,7 +15,27 @@ public class ListenerRespawn implements Listener {
 	
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent e) {
+		/** Team **/
 		
+		Team t = IngameState.team.get(e.getPlayer().getName());
+		
+		
+		/** Check builders size **/
+		
+		if(!IngameState.arenas.contains(e.getPlayer())) {
+			/** Set respawn location **/
+			
+			e.setRespawnLocation(Main.getMap().getOutstandingPositions().get(t));
+			
+			
+			/** Builder inventory **/
+			
+			Game.builderInventory(e.getPlayer());
+		} else {
+			/** Set respawn location **/
+			
+			e.setRespawnLocation(Main.getMap().getPositions().get(t));
+		}
 	}
 	
 }

@@ -17,6 +17,7 @@ public class ListenerBreak implements Listener {
 	
 	/** Break **/
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBreak(final BlockBreakEvent e) {
 		/** EXP **/
@@ -51,12 +52,18 @@ public class ListenerBreak implements Listener {
 					int ticks = Blocks.getTicks(e.getBlock().getType());
 					
 					final Material type = e.getBlock().getType();
+					final byte data = e.getBlock().getData();
 					
 					new BukkitRunnable() {
 						public void run() {
 							/** Type **/
 							
 							e.getBlock().setType(type);
+							
+							
+							/** Data **/
+							
+							e.getBlock().setData(data);
 						}
 					}.runTaskLater(Main.getPlugin(), ticks);
 				}

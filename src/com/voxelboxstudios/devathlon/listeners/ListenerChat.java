@@ -58,7 +58,7 @@ public class ListenerChat implements Listener {
 			String prefix = "";
 			
 			if(IngameState.arenas.contains(e.getPlayer())) {
-				prefix = "§6§l§oKämpfer §r";
+				prefix = "§6§l§o[Kämpfer] §r";
 			}
 			
 			

@@ -1,5 +1,8 @@
 package com.voxelboxstudios.devathlon.listeners;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -26,7 +29,7 @@ public class ListenerClick implements Listener {
 		
 		/** Team selection **/
 		
-		if(e.getInventory().getName().contains("Team Auswahl")) {
+		if(e.getClickedInventory().getName().contains("Team Auswahl")) {
 			/** Join Team **/
 			
 			Player p = (Player) e.getWhoClicked();
@@ -36,51 +39,78 @@ public class ListenerClick implements Listener {
 			
 			ItemStack item = e.getCurrentItem();
 			
-			
-			/** Inventory **/
-			
-			Inventory inv = e.getClickedInventory();
-			
-			
-			/** Close inventory **/
-			
-			p.closeInventory();
-			
-			
-			/** Remove **/
-			
-			for(ItemStack other : inv.getContents()) {
-				if(other != null) {
-					if(other.hasItemMeta()) {
-						if(other.getItemMeta().getLore() != null) {
-							if(other.getItemMeta().getLore().contains("§7" + p.getName())) {
-								other.getItemMeta().getLore().remove("§7" + p.getName());	
+			if(item != null) {
+				if(item.hasItemMeta()) {
+					/** Inventory **/
+					
+					Inventory inv = e.getClickedInventory();
+					
+					
+					/** Close inventory **/
+					
+					p.closeInventory();
+					
+					
+					/** Remove **/
+					
+					for(ItemStack other : inv.getContents()) {
+						if(other != null) {
+							if(other.hasItemMeta()) {
+								if(other.getItemMeta().getLore() != null) {
+									if(other.getItemMeta().getLore().contains("§7" + p.getName())) {
+										ItemMeta meta = other.getItemMeta();
+										List<String> lore = meta.getLore();
+										lore.remove("§7" + p.getName());
+										meta.setLore(lore);
+									}
+								}
 							}
 						}
 					}
+					
+					
+					/** Lore **/
+					
+					ItemMeta meta = item.getItemMeta();
+					
+					if(meta.getLore() == null) {
+						meta.setLore(Arrays.asList("§7" + p.getName()));
+					} else {
+						List<String> lore = meta.getLore();
+						
+						if(!lore.contains("§7" + p.getName())) {
+							lore.add("§7" + p.getName());
+							meta.setLore(lore);
+						} else {
+							/** Send message **/
+							
+							p.sendMessage(Main.prefix + "Du bist bereits in diesem Team.");
+							
+						
+							/** Return **/
+							
+							return;							
+						}
+					}
+					
+					item.setItemMeta(meta);
+					
+					ItemStack helmet = item;
+					helmet.getItemMeta().getLore().clear();
+					
+					p.getInventory().setHelmet(helmet);
+					
+					
+					/** Send message **/
+					
+					p.sendMessage(Main.prefix + "Ausgewähltes Team: " + item.getItemMeta().getDisplayName());
+					
+					
+					/** Play sound **/
+					
+					p.playSound(p.getLocation(), Sound.NOTE_PLING, 1, 3);
 				}
 			}
-			
-			
-			/** Lore **/
-			
-			ItemMeta meta = item.getItemMeta();
-			meta.getLore().add("§7" + p.getName());
-			item.setItemMeta(meta);
-			
-			ItemStack helmet = item;
-			helmet.getItemMeta().getLore().clear();
-			
-			p.getInventory().setHelmet(helmet);
-			
-			/** Send message **/
-			
-			p.sendMessage(Main.prefix + "Ausgewähltes Team: " + item.getItemMeta().getDisplayName());
-			
-			
-			/** Play sound **/
-			
-			p.playSound(p.getLocation(), Sound.NOTE_PLING, 1, 3);
 		}
 	}
 	

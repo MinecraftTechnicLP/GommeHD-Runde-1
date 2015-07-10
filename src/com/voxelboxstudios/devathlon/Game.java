@@ -43,18 +43,12 @@ public class Game {
 				IngameState.arenas.remove(p);
 				
 				
-				/** Set respawn location **/
+				/** Send messages **/
 				
-				p.teleport(Main.getMap().getOutstandingPositions().get(t));
-				
-				
-				/** Builder inventory **/
-				
-				Game.builderInventory(p);
-			} else {
-				/** Set respawn location **/
-				
-				p.teleport(Main.getMap().getPositions().get(t));
+				p.sendMessage("§6§m---------------------------------");
+				p.sendMessage("§8» §7Du bist nun ein Sammler.");
+				p.sendMessage("§8» §7Du musst nun selbst Materialien sammeln.");
+				p.sendMessage("§6§m---------------------------------");
 			}
 		}
 	}
