@@ -113,6 +113,7 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerInteract(), plugin);
 		pm.registerEvents(new ListenerChat(), plugin);
 		pm.registerEvents(new ListenerRespawn(), plugin);
+		pm.registerEvents(new ListenerDeath(), plugin);
 		
 		
 		/** Commands **/

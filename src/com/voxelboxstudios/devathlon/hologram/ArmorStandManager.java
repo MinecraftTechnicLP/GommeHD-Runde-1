@@ -17,7 +17,7 @@ public class ArmorStandManager {
        
 	public static HashMap<Team, EntityArmorStand> TeamArmorStands = new HashMap<>();
 	
-	public void spawnArmorStand(Location loc, Team team) {
+	public static void spawnArmorStand(Location loc, Team team) {
                
 		EntityArmorStand as = new EntityArmorStand(((CraftWorld) loc.getWorld()).getHandle());
         	
@@ -32,7 +32,7 @@ public class ArmorStandManager {
             
 	}
         
-	public void changeArmorStandItem(Team team, ItemStack Hand) {
+	public static void changeArmorStandItem(Team team, ItemStack Hand) {
         	
 		EntityArmorStand a = TeamArmorStands.get(team);
 		ArmorStand as = (ArmorStand) a.getBukkitEntity();
@@ -41,7 +41,7 @@ public class ArmorStandManager {
         	
 	}
 	
-	public void changeArmorStandArmor(Team team, ItemStack Head, ItemStack Body, ItemStack Legs, ItemStack Feet) {
+	public static void changeArmorStandArmor(Team team, ItemStack Head, ItemStack Body, ItemStack Legs, ItemStack Feet) {
     	
 		EntityArmorStand a = TeamArmorStands.get(team);
 		ArmorStand as = (ArmorStand) a.getBukkitEntity();

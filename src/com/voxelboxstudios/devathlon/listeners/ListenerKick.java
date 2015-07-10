@@ -5,13 +5,24 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 
+import com.voxelboxstudios.devathlon.Game;
+import com.voxelboxstudios.devathlon.Main;
+import com.voxelboxstudios.devathlon.state.GameState;
+
 public class ListenerKick implements Listener {
 
 	/** Kick **/
 	
 	@EventHandler
 	public void onKick(PlayerKickEvent e) {
-		e.setLeaveMessage("§8» §6" + e.getPlayer().getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
+		/** Leave message **/
+		
+		e.setLeaveMessage("§8» §6" + e.getPlayer().getName() + " §7hat das Spiel verlassen §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
+		
+		
+		/** Death **/
+		
+		if(Main.getState() == GameState.INGAME) Game.death(e.getPlayer());
 	}
 	
 }
