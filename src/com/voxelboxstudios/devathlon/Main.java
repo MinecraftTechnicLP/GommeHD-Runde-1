@@ -51,16 +51,22 @@ public class Main extends JavaPlugin {
 		}
 		
 		
+		/** Prepare worlds **/
+		
+		Worlds.prepare();
+		
+		
 		/** Listeners **/
 		
 		PluginManager pm = Bukkit.getPluginManager();
 		
+		pm.registerEvents(new ListenerWeather(), plugin);
 		pm.registerEvents(new ListenerJoin(), plugin);
 		pm.registerEvents(new ListenerQuit(), plugin);
 		pm.registerEvents(new ListenerKick(), plugin);
 	}
 	
-	
+
 	/** Get plugin **/
 	
 	public static Main getPlugin() {
