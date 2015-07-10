@@ -27,11 +27,12 @@ public class ListenerClick implements Listener {
 			ItemStack item = e.getCurrentItem();
 			Inventory inv = e.getClickedInventory();
 			p.closeInventory();
-			item.getItemMeta().getLore().add(p.getName());
+			item.getItemMeta().getLore().add("§7" + p.getName());
+			p.sendMessage(Main.prefix + "Du bist jetzt in " + item.getItemMeta().getDisplayName());
 			
 			for(ItemStack other : inv.getContents()) {
 				
-				other.getItemMeta().getLore().remove(p.getName());
+				other.getItemMeta().getLore().remove("§7" + p.getName());
 				
 			}
 		}
