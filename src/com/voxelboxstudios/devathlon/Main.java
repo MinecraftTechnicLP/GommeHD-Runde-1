@@ -3,7 +3,10 @@ package com.voxelboxstudios.devathlon;
 import java.sql.SQLException;
 
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.voxelboxstudios.devathlon.listeners.*;
 
 import com.voxelboxstudios.devathlon.mysql.SQL;
 
@@ -46,6 +49,15 @@ public class Main extends JavaPlugin {
 			
 			return;
 		}
+		
+		
+		/** Listeners **/
+		
+		PluginManager pm = Bukkit.getPluginManager();
+		
+		pm.registerEvents(new ListenerJoin(), plugin);
+		pm.registerEvents(new ListenerQuit(), plugin);
+		pm.registerEvents(new ListenerKick(), plugin);
 	}
 	
 	
