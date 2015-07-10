@@ -1,10 +1,13 @@
 package com.voxelboxstudios.devathlon.team;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
+import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.state.IngameState;
 
 public enum Team {
@@ -31,6 +34,9 @@ public enum Team {
 		}
 	}
 	
+	
+	/** Get chat color **/
+	
 	public String getChatColor() {
 		switch(this) {
 			default:
@@ -46,7 +52,12 @@ public enum Team {
 		}
 	}
 	
+	
+	/** Get fighter **/
+	
 	public Player getFighter() {
+		/** Loop **/
+		
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			if(IngameState.arenas.contains(p)) {
 				if(IngameState.team.get(p.getName()) == this) {
@@ -54,20 +65,35 @@ public enum Team {
 				}
 			}
 		}
+		
+		
+		/** Return null **/
+		
 		return null;
 	}
 	
-	public Player getBuilder() {
+	
+	/** Get builders **/
+	
+	public List<Player> getBuilders() {
+		/** Builders **/
+		
+		List<Player> builders = new ArrayList<Player>();
+		
+		
+		/** Loop **/
+		
 		for(Player p : Bukkit.getOnlinePlayers()) {
-			if(!IngameState.arenas.contains(p)) {
+			if(!IngameState.arenas.contains(p) && !Game.spectators.contains(p.getName())) {
 				if(IngameState.team.get(p.getName()) == this) {
-					if(!p.getGameMode().equals(GameMode.SPECTATOR)) {
-						return p;
-					}
+					builders.add(p);
 				}
 			}
 		}
-		return null;
+		
+		
+		/** Return builders **/
+		
+		return builders;
 	}
-	
 }

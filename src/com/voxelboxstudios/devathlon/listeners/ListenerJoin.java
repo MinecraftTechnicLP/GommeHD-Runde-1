@@ -33,11 +33,6 @@ public class ListenerJoin implements Listener {
 		new BukkitRunnable() { public void run() { Stats.load(p); }}.runTaskAsynchronously(Main.getPlugin());
 		
 		
-		/** Join message **/
-		
-		e.setJoinMessage("§8» §6" + p.getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
-		
-		
 		/** Clear inventory **/
 		
 		p.getInventory().clear();
@@ -73,6 +68,11 @@ public class ListenerJoin implements Listener {
 		/** Lobby **/
 		
 		if(Main.getState() == GameState.LOBBY) {
+			/** Join message **/
+			
+			e.setJoinMessage("§8» §6" + p.getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
+			
+			
 			/** Set exp **/
 			
 			p.setExp((1f / LobbyState.getMaxTime()) * LobbyState.getCurrentTime());
@@ -103,23 +103,28 @@ public class ListenerJoin implements Listener {
 				/** Add as spectator **/
 				
 				Game.spectators.add(p.getName());
+			}
+			
+			
+			/** Set fly **/
+			
+			p.setAllowFlight(true);
+			
+			
+			/** Hide **/
+			
+			for(Player t : Bukkit.getOnlinePlayers()) {
+				t.hidePlayer(p);
 				
-				
-				/** Set fly **/
-				
-				p.setAllowFlight(true);
-				
-				
-				/** Hide **/
-				
-				for(Player t : Bukkit.getOnlinePlayers()) {
-					t.hidePlayer(p);
-					
-					if(Game.spectators.contains(t.getName())) {
-						p.hidePlayer(p);
-					}
+				if(Game.spectators.contains(t.getName())) {
+					p.hidePlayer(p);
 				}
 			}
+			
+			
+			/** Scoreboard **/
+			
+			Scoreboards.update(p);
 		}
 	}
 	

@@ -16,6 +16,12 @@ public class Worlds {
 			w.setGameRuleValue("doDaylightCycle", "false");
 			
 			
+			/** Fire tick **/
+			
+			w.setGameRuleValue("fireSpread", "false");
+			w.setGameRuleValue("doFireTick", "false");
+			
+			
 			/** Time **/
 			
 			w.setTime(15000);

@@ -99,11 +99,6 @@ public class LobbyState {
 				}
 				
 				
-				/** Subtract time **/
-				
-				currenttime--;
-				
-				
 				/** Check time **/
 				
 				if(currenttime == 0) {
@@ -136,6 +131,11 @@ public class LobbyState {
 						}
 					}
 				}
+				
+				
+				/** Subtract time **/
+				
+				currenttime--;
 			}
 		}.runTaskTimer(Main.getPlugin(), 0L, 20L);
 	}

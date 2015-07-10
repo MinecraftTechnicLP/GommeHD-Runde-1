@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.state.GameState;
@@ -49,16 +50,28 @@ public class ListenerClick implements Listener {
 			/** Remove **/
 			
 			for(ItemStack other : inv.getContents()) {
-				if(other.getItemMeta().getLore().contains("§7" + p.getName())) {
-					other.getItemMeta().getLore().remove("§7" + p.getName());	
+				if(other != null) {
+					if(other.hasItemMeta()) {
+						if(other.getItemMeta().getLore() != null) {
+							if(other.getItemMeta().getLore().contains("§7" + p.getName())) {
+								other.getItemMeta().getLore().remove("§7" + p.getName());	
+							}
+						}
+					}
 				}
 			}
 			
 			
 			/** Lore **/
 			
-			item.getItemMeta().getLore().add("§7" + p.getName());
+			ItemMeta meta = item.getItemMeta();
+			meta.getLore().add("§7" + p.getName());
+			item.setItemMeta(meta);
 			
+			ItemStack helmet = item;
+			helmet.getItemMeta().getLore().clear();
+			
+			p.getInventory().setHelmet(helmet);
 			
 			/** Send message **/
 			

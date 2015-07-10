@@ -5,17 +5,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import com.voxelboxstudios.devathlon.Game;
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.state.GameState;
+import com.voxelboxstudios.devathlon.state.IngameState;
 import com.voxelboxstudios.devathlon.state.LobbyState;
-import com.voxelboxstudios.devathlon.team.Team;
 
 public class Scoreboards {
 	
 	/** Update **/
 	
+	@SuppressWarnings("deprecation")
 	public static void update(Player p) {
 		/** Lobby **/
 		
@@ -75,10 +77,48 @@ public class Scoreboards {
 			
 			/** Set score **/
 			
-			obj.getScore("§eGelb:").setScore(Game.points.get(Team.YELLOW));
-			obj.getScore("§cRot:").setScore(Game.points.get(Team.RED));
-			obj.getScore("§aGrün:").setScore(Game.points.get(Team.GREEN));
-			obj.getScore("§bBlau:").setScore(Game.points.get(Team.BLUE));
+			obj.getScore("§eGelb:").setScore(Game.points.get(com.voxelboxstudios.devathlon.team.Team.YELLOW));
+			obj.getScore("§cRot:").setScore(Game.points.get(com.voxelboxstudios.devathlon.team.Team.RED));
+			obj.getScore("§aGrün:").setScore(Game.points.get(com.voxelboxstudios.devathlon.team.Team.GREEN));
+			obj.getScore("§bBlau:").setScore(Game.points.get(com.voxelboxstudios.devathlon.team.Team.BLUE));
+			
+			
+			/** Teams **/
+			
+			Team red = sb.registerNewTeam("red");
+			Team green = sb.registerNewTeam("green");
+			Team blue = sb.registerNewTeam("blue");
+			Team yellow = sb.registerNewTeam("yellow");
+			
+			red.setAllowFriendlyFire(false);
+			red.setCanSeeFriendlyInvisibles(true);
+			red.setPrefix(com.voxelboxstudios.devathlon.team.Team.RED.getChatColor());
+			
+			blue.setAllowFriendlyFire(false);
+			blue.setCanSeeFriendlyInvisibles(true);
+			blue.setPrefix(com.voxelboxstudios.devathlon.team.Team.BLUE.getChatColor());
+			
+			green.setAllowFriendlyFire(false);
+			green.setCanSeeFriendlyInvisibles(true);
+			green.setPrefix(com.voxelboxstudios.devathlon.team.Team.GREEN.getChatColor());
+			
+			yellow.setAllowFriendlyFire(false);
+			yellow.setCanSeeFriendlyInvisibles(true);
+			yellow.setPrefix(com.voxelboxstudios.devathlon.team.Team.YELLOW.getChatColor());
+			
+			
+			/** Add players to teams **/
+			
+			for(Player t : Bukkit.getOnlinePlayers()) {
+				if(!Game.spectators.contains(t.getName())) {
+					com.voxelboxstudios.devathlon.team.Team te = IngameState.team.get(t.getName());
+					
+					if(te == com.voxelboxstudios.devathlon.team.Team.GREEN) green.addPlayer(t);
+					if(te == com.voxelboxstudios.devathlon.team.Team.RED) red.addPlayer(t);
+					if(te == com.voxelboxstudios.devathlon.team.Team.BLUE) blue.addPlayer(t);
+					if(te == com.voxelboxstudios.devathlon.team.Team.YELLOW) yellow.addPlayer(t);
+				}
+			}
 			
 			
 			/** Set scoreboard **/

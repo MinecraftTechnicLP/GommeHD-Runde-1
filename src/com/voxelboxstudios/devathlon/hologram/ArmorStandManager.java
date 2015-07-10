@@ -9,6 +9,7 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.voxelboxstudios.devathlon.team.Team;
@@ -28,8 +29,9 @@ public class ArmorStandManager {
 		as.setBasePlate(false);
             
 		PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(as);
-		((CraftPlayer) team.getBuilder()).getHandle().playerConnection.sendPacket(packet);
-            
+		
+		for(Player t : team.getBuilders())
+			((CraftPlayer) t).getHandle().playerConnection.sendPacket(packet);
 	}
         
 	public static void changeArmorStandItem(Team team, ItemStack Hand) {

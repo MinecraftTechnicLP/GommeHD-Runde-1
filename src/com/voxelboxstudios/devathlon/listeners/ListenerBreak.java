@@ -31,7 +31,7 @@ public class ListenerBreak implements Listener {
 		
 		/** Types **/
 		
-		Material[] list = new Material[] { Material.DIAMOND_ORE, Material.IRON_ORE, Material.COAL_ORE, Material.GOLD_ORE, Material.LOG, Material.STONE };
+		Material[] list = new Material[] { Material.DIAMOND_ORE, Material.IRON_ORE, Material.COAL_ORE, Material.GOLD_ORE, Material.LOG, Material.STONE, Material.GRAVEL, Material.WEB, Material.LEAVES };
 		
 		
 		/** Ingame **/

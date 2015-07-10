@@ -1,5 +1,6 @@
 package com.voxelboxstudios.devathlon.listeners;
 
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,11 @@ public class ListenerDamage implements Listener {
 	
 	@EventHandler
 	public void onDamage(EntityDamageEvent e) {
+		/** Armor stand **/
+		
+		if(e.getEntity() instanceof ArmorStand) e.setCancelled(true);
+		
+		
 		/** Lobby **/
 		
 		if(Main.state == GameState.LOBBY) {
