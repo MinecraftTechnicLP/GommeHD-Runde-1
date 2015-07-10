@@ -13,12 +13,22 @@ public class SQL {
 	private static Database db;
 	
 	
+	/** Prefix **/
+	
+	public static String prefix;
+	
+	
 	/** Connect **/
 	
 	public static void connect() throws ClassNotFoundException, SQLException {
 		/** Get file configuration from main class **/
 		
 		FileConfiguration cfg = Main.getPlugin().getConfig();
+		
+		
+		/** Prefix **/
+		
+		prefix = cfg.getString("mysql.tableprefix");
 		
 		
 		/** Setup database **/
@@ -35,6 +45,11 @@ public class SQL {
 		/** Open connection **/
 		
 		db.openConnection();
+		
+		
+		/** Create tables **/
+		
+		db.queryUpdate("CREATE TABLE IF NOT EXISTS " + prefix + "stats (uuid VARCHAR(100), kills INT, deaths INT, wins INT, gamesplayed INT)");
 	}
 	
 	

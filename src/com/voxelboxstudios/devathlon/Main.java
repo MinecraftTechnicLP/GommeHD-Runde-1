@@ -9,12 +9,24 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.voxelboxstudios.devathlon.listeners.*;
 
 import com.voxelboxstudios.devathlon.mysql.SQL;
+import com.voxelboxstudios.devathlon.state.GameState;
+import com.voxelboxstudios.devathlon.state.LobbyState;
 
 public class Main extends JavaPlugin {
 
 	/** Plugin **/
 	
 	private static Main plugin;
+	
+	
+	/** State **/
+	
+	public static GameState state;
+	
+	
+	/** Prefix **/
+	
+	public static String prefix = "§8» §6Mine 'n' Fight: §7";
 	
 	
 	/** Gets called when plugin is loaded **/
@@ -64,6 +76,17 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerJoin(), plugin);
 		pm.registerEvents(new ListenerQuit(), plugin);
 		pm.registerEvents(new ListenerKick(), plugin);
+		pm.registerEvents(new ListenerFood(), plugin);
+		pm.registerEvents(new ListenerDamage(), plugin);
+		pm.registerEvents(new ListenerBreak(), plugin);
+		pm.registerEvents(new ListenerPlace(), plugin);
+		pm.registerEvents(new ListenerClick(), plugin);
+		pm.registerEvents(new ListenerDrop(), plugin);
+		
+		
+		/** Lobby state **/
+		
+		new LobbyState();
 	}
 	
 
@@ -71,6 +94,20 @@ public class Main extends JavaPlugin {
 	
 	public static Main getPlugin() {
 		return plugin;
+	}
+	
+	
+	/** Get state **/
+	
+	public static GameState getState() {
+		return state;
+	}
+
+
+	/** Set state **/
+	
+	public static void setState(GameState s) {
+		state = s;
 	}
 	
 }

@@ -1,3 +1,6 @@
+lobby:
+     time: 60
+     minimal-players: 8
 mysql:
      host: localhost
      port: 3306
