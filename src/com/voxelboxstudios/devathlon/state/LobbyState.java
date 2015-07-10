@@ -1,11 +1,13 @@
 package com.voxelboxstudios.devathlon.state;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.voxelboxstudios.devathlon.Main;
+import com.voxelboxstudios.devathlon.config.GameConfiguration;
 
 public class LobbyState {
 	
@@ -24,12 +26,22 @@ public class LobbyState {
 	private static int time;
 	
 	
+	/** Location **/
+	
+	private static Location location;
+	
+	
 	/** Constructor **/
 	
 	public LobbyState() {
 		/** Set state **/
 		
 		Main.setState(GameState.LOBBY);
+		
+		
+		/** Location **/
+		
+		location = ((GameConfiguration) Main.getPlugin().getConfig()).getLocation("lobby.position");
 		
 		
 		/** Time **/
@@ -134,5 +146,12 @@ public class LobbyState {
 	
 	public static int getMaxTime() {
 		return time;
+	}
+	
+	
+	/** Get location **/
+	
+	public static Location getLocation() {
+		return location;
 	}
 }

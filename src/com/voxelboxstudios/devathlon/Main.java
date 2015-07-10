@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.voxelboxstudios.devathlon.commands.CommandStats;
 import com.voxelboxstudios.devathlon.listeners.*;
 
 import com.voxelboxstudios.devathlon.mysql.SQL;
@@ -82,6 +83,11 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerPlace(), plugin);
 		pm.registerEvents(new ListenerClick(), plugin);
 		pm.registerEvents(new ListenerDrop(), plugin);
+		
+		
+		/** Commands **/
+		
+		getCommand("stats").setExecutor(new CommandStats());
 		
 		
 		/** Lobby state **/

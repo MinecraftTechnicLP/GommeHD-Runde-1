@@ -42,7 +42,7 @@ public class Stats {
 			if(!rs.next()) {
 				/** Update **/
 				
-				SQL.getDatabase().queryUpdate("INSERT INTO '" + SQL.prefix + "stats' (" + p.getUniqueId().toString() + ", 0, 0, 0, 0)");
+				SQL.getDatabase().queryUpdate("INSERT INTO " + SQL.prefix + "stats (uuid, kills, deaths, wins, gamesplayed) VALUES ('" + p.getUniqueId().toString() + "', '0', '0', '0', '0')");
 				
 				
 				/** Put into stats **/
@@ -105,6 +105,9 @@ public class Stats {
 	/** Get KD **/
 	
 	public double getKD() {
+		if(deaths == 0) return kills;
+		if(kills == 0) return 0;
+		
 		return (double) kills / (double) deaths;
 	}
 	
@@ -112,6 +115,9 @@ public class Stats {
 	/** Get win chance **/
 	
 	public int getWinChance() {
+		if(gamesplayed == 0) return 0;
+		if(gamesplayed > 0 && wins == 0) return 0;
+		
 		return (wins / gamesplayed) * 100;
 	}
 

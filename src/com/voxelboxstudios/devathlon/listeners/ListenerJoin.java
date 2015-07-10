@@ -1,11 +1,13 @@
 package com.voxelboxstudios.devathlon.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.items.ItemUtil;
@@ -21,17 +23,17 @@ public class ListenerJoin implements Listener {
 	public void onJoin(PlayerJoinEvent e) {
 		/** Player **/
 		
-		Player p = e.getPlayer();
+		final Player p = e.getPlayer();
 		
 		
 		/** Stats **/
 		
-		Stats.load(p);
+		new BukkitRunnable() { public void run() { Stats.load(p); }}.runTaskAsynchronously(Main.getPlugin());
 		
 		
 		/** Join message **/
 		
-		e.setJoinMessage("§6" + p.getName() + " §7hat das Spiel betreten.");
+		e.setJoinMessage("§8» §6" + p.getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "].");
 		
 		
 		/** Clear inventory **/
@@ -72,6 +74,11 @@ public class ListenerJoin implements Listener {
 			/** Item **/
 			
 			p.getInventory().addItem(ItemUtil.getItemStack(Material.BOOK, "§6Team Auswahl §7<Rechts-Klick>"));
+			
+			
+			/** Teleport **/
+			
+			p.teleport(LobbyState.getLocation());
 		}
 	}
 	
