@@ -132,20 +132,6 @@ public class ListenerJoin implements Listener {
 			}
 			
 			
-			/** Killed **/
-			
-			if(!Main.killed) {
-				/** Killed **/
-				
-				Main.killed = true;
-				
-				
-				/** Entity **/
-				
-				new BukkitRunnable() { public void run() { Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e"); } }.runTaskLater(Main.getPlugin(), 20L);
-			}
-			
-			
 			/** Scoreboard **/
 			
 			Scoreboards.update(p);

@@ -48,8 +48,10 @@ public class ListenerDeath implements Listener {
 		new BukkitRunnable() {
 			  @Override
 			  public void run() {
-				  PacketPlayInClientCommand packet = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN);
-				  ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
+				  try {
+					  PacketPlayInClientCommand packet = new PacketPlayInClientCommand(EnumClientCommand.PERFORM_RESPAWN);
+					  ((CraftPlayer) e.getEntity()).getHandle().playerConnection.a(packet);
+				  } catch(Exception ex) {}
 			  }
 		}.runTaskLater(Main.getPlugin(), 1L);
 			
@@ -62,6 +64,7 @@ public class ListenerDeath implements Listener {
 		/** Death **/
 		
 		Game.death(e.getEntity());
+		
 		
 		/** Stats **/
 		
@@ -136,9 +139,7 @@ public class ListenerDeath implements Listener {
 						
 						try {
 							SQL.getDatabase().queryUpdate("UPDATE " + SQL.prefix + "stats SET kills = kills+1 WHERE uuid='" + e.getEntity().getKiller().getUniqueId().toString() + "'");
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
+						} catch (SQLException e) {}
 						
 						
 						/** Load stats **/
@@ -178,6 +179,11 @@ public class ListenerDeath implements Listener {
 			
 			Bukkit.broadcastMessage("§8»" + IngameState.team.get(e.getEntity().getName()).getChatColor() + e.getEntity().getName() + " §7ist gestorben!");	
 		}
+		
+		
+		/** Check win **/
+		
+		Game.checkWin();
 	}
 	
 }

@@ -120,6 +120,11 @@ public class Game {
 				ArmorStandManager.TeamArmorStands.get(IngameState.team.get(p.getName())).setCustomName(IngameState.team.get(p.getName()).getChatColor() + b.getName());
 				
 				
+				/** Fire ticks **/
+				
+				b.setFireTicks(0);
+				
+				
 				/** Level **/
 				
 				b.setLevel(p.getLevel());
@@ -202,7 +207,7 @@ public class Game {
 				
 				/** Loop **/
 				
-				for(Player p : Bukkit.getOnlinePlayers()) {
+				for(final Player p : Bukkit.getOnlinePlayers()) {
 					/** Set level **/
 					
 					p.setLevel(0);
@@ -244,9 +249,14 @@ public class Game {
 					
 					/** Spawn firework **/
 					
-					spawnFirework(p.getLocation());
+					new BukkitRunnable() {
+						public void run() {
+							spawnFirework(p.getLocation());
+						}
+					}.runTaskTimer(Main.getPlugin(), 0L, 20L);
 				}
 
+				
 				/** Broadcast **/
 				
 				Bukkit.broadcastMessage(Main.prefix + "Das Spiel ist vorbei! Gewonnen hat/haben:");
