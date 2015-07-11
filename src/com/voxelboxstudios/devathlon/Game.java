@@ -17,6 +17,11 @@ import com.voxelboxstudios.devathlon.team.Team;
 
 public class Game {
 
+	/** Cooldown **/
+	
+	public static Map<String, Long> cooldown = new HashMap<String, Long>();
+	
+	
 	/** Points **/
 	
 	public static Map<Team, Integer> points = new HashMap<Team, Integer>();
@@ -77,6 +82,8 @@ public class Game {
 				b.sendMessage("§8» §7Du bist nun der neue §6§lKämper§r§7.");
 				b.sendMessage("§8» §7Du musst nun mit den vorhandenen Materialien kämpfen!");
 				b.sendMessage("§6§m---------------------------------");
+				
+				cooldown.put(b.getName(), System.currentTimeMillis());
 				
 				
 				/** Teleport **/

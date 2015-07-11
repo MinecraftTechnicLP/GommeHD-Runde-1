@@ -47,6 +47,13 @@ public class ListenerDamage implements Listener {
 				if(!IngameState.arenas.contains(p)) {
 					e.setCancelled(true);
 				}
+				
+				
+				/** Cooldown **/
+			
+				if(Game.cooldown.containsKey(p.getName())) {
+					if(System.currentTimeMillis() - Game.cooldown.get(p.getName()) >= Main.getSpawnCooldown());
+				}
 			}
 		}
 	}

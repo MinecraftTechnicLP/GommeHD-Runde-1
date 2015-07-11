@@ -167,4 +167,11 @@ public class LobbyState {
 	public static int getMinimalPlayers() {
 		return minimalplayers;
 	}
+
+
+	/** Current time **/
+	
+	public static void setCurrentTime(int i) {
+		currenttime = i;
+	}
 }

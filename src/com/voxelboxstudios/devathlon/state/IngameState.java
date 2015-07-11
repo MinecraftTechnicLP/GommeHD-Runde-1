@@ -38,24 +38,26 @@ public class IngameState {
 	
 	/** Arenas **/
 	
-	public static List<Player> arenas = new ArrayList<Player>();;
+	public static List<Player> arenas = new ArrayList<Player>();
 	
 	
 	/** Safe Time **/
 	
-	public int buildtime = 30;
+	public int buildtime;
 	
 	
 	/** Constructor **/
 	
 	public IngameState() {
+		/** Build time **/
+		
+		buildtime = Main.getBuildTime();
+		
+		
 		/** Barriers **/
 		
 		setSpawnBlocks(Material.BARRIER);
 		
-		for(Team teams : Team.values()) {
-			ArmorStandManager.spawnArmorStand(Main.getMap().getShopPositions().get(teams), teams);
-		}
 		
 		/** Points **/
 		
@@ -63,25 +65,22 @@ public class IngameState {
 		Game.points.put(Team.GREEN, 0);
 		Game.points.put(Team.BLUE, 0);
 		Game.points.put(Team.YELLOW, 0);
+
 		
+		/** Teams **/
 		
+		final Map<Player, Team> teams = Teams.calculate();
+		
+
 		/** Chat **/
 		
 		for(Player p : Bukkit.getOnlinePlayers()) {
 			for(int i = 0; i < 100; i++) p.sendMessage(" ");
 			
 			p.sendMessage(Main.prefix + "Das Spiel beginnt!");
+			
+			team.put(p.getName(), teams.get(p));
 		}
-		
-		
-		/** Set state **/
-		
-		Main.setState(GameState.INGAME);
-		
-		
-		/** Teams **/
-		
-		final Map<Player, Team> teams = Teams.calculate();
 		
 		
 		/** Players **/
@@ -128,6 +127,19 @@ public class IngameState {
 				arena.put(Team.YELLOW, p);
 			}
 		}
+		
+		
+		/** Armor stands **/
+		
+		for(Team tea : Team.values()) {
+			ArmorStandManager.spawnArmorStand(Main.getMap().getShopPositions().get(tea), tea);
+			ArmorStandManager.TeamArmorStands.get(tea).getNearbyEntities(1, 1, 1).removeAll(ArmorStandManager.TeamArmorStands.get(tea).getNearbyEntities(1, 1, 1));
+		}
+		
+		
+		/** Set state **/
+		
+		Main.setState(GameState.INGAME);
 		
 		
 		/** Loop through players **/
@@ -178,11 +190,6 @@ public class IngameState {
 			if(!arenas.contains(p)) p.teleport(Main.getMap().getOutstandingPositions().get(teams.get(p))); else p.teleport(Main.getMap().getOutstandingPositions().get(teams.get(p)).clone().add(0, 5, 0));
 			
 			
-			/** Put into map **/
-			
-			team.put(p.getName(), teams.get(p));
-			
-			
 			/** Message **/
 			
 			if(arenas.contains(p)) {
@@ -190,7 +197,7 @@ public class IngameState {
 				
 				p.sendMessage("§6§m---------------------------------");
 				p.sendMessage("§8» §6Du bist der Kämpfer!");
-				p.sendMessage("§8» §7Du musst nun 30 Sekunden warten, bis das Spiel beginnt,");
+				p.sendMessage("§8» §7Du musst nun " + Main.getBuildTime() + " Sekunden warten, bis das Spiel beginnt,");
 				p.sendMessage("§8» §7während deine Kameraden Materialien für dich sammeln.");
 				p.sendMessage("§6§m---------------------------------");
 				
@@ -248,8 +255,9 @@ public class IngameState {
 						/** Set level **/
 						
 						p.setLevel(buildtime);
-						p.setExp((1f / 30) * buildtime);
+						p.setExp((1f / Main.getBuildTime()) * buildtime);
 						
+						Bukkit.broadcastMessage("§cArmorStand Error: 404");
 						
 						/** Play sound **/
 							

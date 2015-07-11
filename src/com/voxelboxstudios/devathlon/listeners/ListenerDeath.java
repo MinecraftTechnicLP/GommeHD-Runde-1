@@ -97,6 +97,9 @@ public class ListenerDeath implements Listener {
 			death_messages.add("getötet");
 			death_messages.add("pulverisiert");
 			death_messages.add("zermalmt");
+			death_messages.add("mit Leons Bugs erschlagen");
+			death_messages.add("zu Devs ArmorStands verarbeitet");
+			death_messages.add("beim Programmieren erwischt");
 			
 			
 			/** Shuffle death messages **/

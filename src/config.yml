@@ -8,6 +8,9 @@ respawntime:
      COBWEB: 100
      LEAVES: 80
      LAPIS_ORE: 300
+ingame:
+     spawncooldown: 3000
+     buildtime: 30
 lobby:
      time: 60
      minimal-players: 8

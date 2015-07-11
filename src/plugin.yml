@@ -7,3 +7,5 @@ commands:
           description: Stats
      map:
           description: Map
+     start:
+          description: Start

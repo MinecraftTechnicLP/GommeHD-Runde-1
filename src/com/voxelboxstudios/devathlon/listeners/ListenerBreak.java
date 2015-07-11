@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +23,7 @@ public class ListenerBreak implements Listener {
 	
 	/** Break **/
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onBreak(final BlockBreakEvent e) {
 		/** EXP **/
@@ -92,51 +93,66 @@ public class ListenerBreak implements Listener {
 					
 					/** Respawn block **/
 
-					if(Blocks.ticks.containsKey(e.getBlock().getType())) respawnBlock(e.getBlock());
+					if(Blocks.ticks.containsKey(e.getBlock().getType())) respawnBlock(e.getBlock().getLocation(), e.getBlock().getType(), e.getBlock().getData());
 				}
 			}
 		}
 	}
 	
-	public void respawnBlock(final Block b) {
+	/** Respawn Blocks **/
+	
+	public void respawnBlock(final Location l, final Material m, final byte data) {
 		/** Ticks **/
 		
-		int ticks = Blocks.getTicks(b.getType());
+		int ticks = Blocks.getTicks(m);
 		
 		new BukkitRunnable() {
 			@SuppressWarnings("deprecation")
 			public void run() {
 				/** Don't block the player **/
 				
-				final Material type = b.getType();
-				final byte data = b.getData();
 				
 				boolean isBlocked = false;
 				
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(!Game.spectators.contains(p)) {
-						if(p.getLocation().getBlock().getLocation() == b.getLocation() || p.getEyeLocation().getBlock().getLocation() == b.getLocation()) {
+						if(checkLocation(p.getLocation().getBlock().getLocation(), l) || checkLocation(p.getEyeLocation().getBlock().getLocation(), l)) {
 							isBlocked = true;
 							break;
 						}
 					}	
 				}
 				
-				Bukkit.broadcastMessage("Test: "+isBlocked);
-				
 				if(!isBlocked) {
 					/** Type **/
 					
-					b.setType(type);
+					l.getWorld().getBlockAt(l).setType(m);
 					
 					
 					/** Data **/
 					
-					b.setData(data);
+					l.getWorld().getBlockAt(l).setData(data);
+					
+					cancel();
 				} else {
-					respawnBlock(b);
+					
+					cancel();
+					respawnBlock(l, m, data);
 				}
 			}
 		}.runTaskLater(Main.getPlugin(), ticks);
+	}
+	
+	/** Check Location **/
+	
+	public boolean checkLocation(Location l, Location l2){
+		if(l.getBlockX() == l2.getBlockX()){
+			if(l.getBlockY() == l2.getBlockY()){
+				if(l.getBlockZ() == l2.getBlockZ()){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

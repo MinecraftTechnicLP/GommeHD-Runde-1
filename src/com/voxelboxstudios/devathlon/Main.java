@@ -36,6 +36,16 @@ public class Main extends JavaPlugin {
 	public static String prefix = "§8» §6Mine 'n' Fight: §7";
 	
 	
+	/** Spawn cooldown **/
+	
+	private static int spawncooldown;
+	
+	
+	/** Build time **/
+	
+	private static int buildtime;
+	
+	
 	/** Gets called when plugin is loaded **/
 	
 	public void onEnable() {
@@ -97,6 +107,12 @@ public class Main extends JavaPlugin {
 		Worlds.prepare();
 		
 		
+		/** Spawn cooldown **/
+		
+		spawncooldown = getConfig().getInt("ingame.spawncooldown");
+		buildtime = getConfig().getInt("ingame.buildtime");
+		
+		
 		/** Listeners **/
 		
 		PluginManager pm = Bukkit.getPluginManager();
@@ -120,12 +136,13 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerPickup(), plugin);
 		pm.registerEvents(new ListenerDamageByEntity(), plugin);
 		pm.registerEvents(new ListenerItemMove(), plugin);
-		pm.registerEvents(new ListenerHolding(), plugin);
+		//pm.registerEvents(new ListenerHolding(), plugin);
 		
 		
 		/** Commands **/
 		
 		getCommand("stats").setExecutor(new CommandStats());
+		getCommand("start").setExecutor(new CommandStart());
 		
 		
 		/** Respawn time **/
@@ -164,6 +181,20 @@ public class Main extends JavaPlugin {
 	
 	public static Map getMap() {
 		return map;
+	}
+
+
+	/** Get spawn cooldown **/
+	
+	public static long getSpawnCooldown() {
+		return spawncooldown;
+	}
+	
+
+	/** Get build time **/
+	
+	public static int getBuildTime() {
+		return buildtime;
 	}
 	
 }
