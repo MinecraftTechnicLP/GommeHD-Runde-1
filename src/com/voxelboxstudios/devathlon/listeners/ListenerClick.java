@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.voxelboxstudios.devathlon.Main;
 import com.voxelboxstudios.devathlon.state.GameState;
+import com.voxelboxstudios.devathlon.state.LobbyState;
 
 public class ListenerClick implements Listener {
 
@@ -52,7 +53,12 @@ public class ListenerClick implements Listener {
 									p.sendMessage(Main.prefix + "Du bist bereits in diesem Team!");
 									return;
 								}
-								if(item.getItemMeta().getLore().size() == 2) {
+								
+								int max = LobbyState.getMinimalPlayers() / 4;
+								
+								if(max < 1) max = 1;
+								
+								if(item.getItemMeta().getLore().size() == max) {
 									p.sendMessage(Main.prefix + "Dieses Team ist bereits voll!");
 									return;
 								}

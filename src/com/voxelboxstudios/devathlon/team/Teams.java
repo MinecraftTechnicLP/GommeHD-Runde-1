@@ -9,6 +9,8 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class Teams {
 
@@ -18,6 +20,32 @@ public class Teams {
 		/** Teams **/
 		
 		Map<Player, Team> teams = new HashMap<Player, Team>();
+		
+		
+		/** Overriden teams **/
+		
+		Inventory inv = TeamSelection.getInventory();
+		
+		for(ItemStack is : inv.getContents()) {
+			if(is != null) {
+				if(is.hasItemMeta()) {
+					if(is.getItemMeta().getLore() != null) {
+						Team t = null;
+						
+						if(is.getItemMeta().getDisplayName().startsWith(Team.BLUE.getChatColor())) t = Team.BLUE;
+						if(is.getItemMeta().getDisplayName().startsWith(Team.RED.getChatColor())) t = Team.RED;
+						if(is.getItemMeta().getDisplayName().startsWith(Team.GREEN.getChatColor())) t = Team.GREEN;
+						if(is.getItemMeta().getDisplayName().startsWith(Team.YELLOW.getChatColor())) t = Team.YELLOW;
+						
+						for(Player p : Bukkit.getOnlinePlayers()) {
+							if(is.getItemMeta().getLore().contains("§7" + p.getName())) {
+								teams.put(p, t);
+							}
+						}
+					}
+				}
+			}
+		}
 		
 		
 		/** Available teams **/
@@ -49,7 +77,7 @@ public class Teams {
 		for(Player p : players) {
 			/** Put into hashmap **/
 			
-			teams.put(p, available_teams.get(i));
+			if(!teams.containsKey(p)) teams.put(p, available_teams.get(i));
 			
 			if(state % 2 == 0) {
 				i++;
