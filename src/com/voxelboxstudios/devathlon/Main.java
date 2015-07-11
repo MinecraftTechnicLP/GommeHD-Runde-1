@@ -46,6 +46,16 @@ public class Main extends JavaPlugin {
 	private static int buildtime;
 	
 	
+	/** Winning points **/
+	
+	private static int winningpoints;
+
+
+	/** Killed **/
+	
+	public static boolean killed = false;
+	
+	
 	/** Gets called when plugin is loaded **/
 	
 	public void onEnable() {
@@ -107,10 +117,11 @@ public class Main extends JavaPlugin {
 		Worlds.prepare();
 		
 		
-		/** Spawn cooldown **/
+		/** Variables **/
 		
 		spawncooldown = getConfig().getInt("ingame.spawncooldown");
 		buildtime = getConfig().getInt("ingame.buildtime");
+		winningpoints = getConfig().getInt("ingame.winningpoints");
 		
 		
 		/** Listeners **/
@@ -136,7 +147,9 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerPickup(), plugin);
 		pm.registerEvents(new ListenerDamageByEntity(), plugin);
 		pm.registerEvents(new ListenerItemMove(), plugin);
-		//pm.registerEvents(new ListenerHolding(), plugin);
+		pm.registerEvents(new ListenerHolding(), plugin);
+		pm.registerEvents(new ListenerEntityInteract(), plugin);
+		pm.registerEvents(new ListenerClose(), plugin);
 		
 		
 		/** Commands **/
@@ -195,6 +208,13 @@ public class Main extends JavaPlugin {
 	
 	public static int getBuildTime() {
 		return buildtime;
+	}
+
+
+	/** Get winning points **/
+	
+	public static Integer getWinningPoints() {
+		return winningpoints;
 	}
 	
 }

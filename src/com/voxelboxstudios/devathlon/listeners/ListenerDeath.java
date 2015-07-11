@@ -97,9 +97,7 @@ public class ListenerDeath implements Listener {
 			death_messages.add("getötet");
 			death_messages.add("pulverisiert");
 			death_messages.add("zermalmt");
-			death_messages.add("mit Leons Bugs erschlagen");
-			death_messages.add("zu Devs ArmorStands verarbeitet");
-			death_messages.add("beim Programmieren erwischt");
+			death_messages.add("zerstört");
 			
 			
 			/** Shuffle death messages **/
@@ -119,9 +117,15 @@ public class ListenerDeath implements Listener {
 				
 				Team team = IngameState.team.get(e.getEntity().getKiller().getName());
 				
-				/** Add Point **/
+				
+				/** Add point **/
 				
 				Game.points.put(team, Game.points.get(team) + 1);
+				
+				
+				/** Add experience **/
+				
+				e.getEntity().getKiller().giveExp(8);
 				
 				
 				/** Stats **/
@@ -158,7 +162,7 @@ public class ListenerDeath implements Listener {
 						if(p != e.getEntity().getKiller() && IngameState.team.get(p.getName()) == team) {
 							/** Add potion effect **/
 							
-							p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 60, 2));
+							p.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 20 * 60, 1));
 							p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 60, 1));
 							
 							

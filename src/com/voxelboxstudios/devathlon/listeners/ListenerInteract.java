@@ -35,7 +35,7 @@ public class ListenerInteract implements Listener {
 		
 		if(e.getAction() == Action.PHYSICAL) e.setCancelled(true);
 		
-		
+
 		/** Check event **/
 		
 		if(Main.getState() == GameState.LOBBY) { e.setCancelled(true); }
@@ -98,17 +98,13 @@ public class ListenerInteract implements Listener {
 				ItemStack is = potion.toItemStack(new Random().nextInt(1)+1);
 				
 				
-				/** Add item **/
-				
-				e.getPlayer().getInventory().addItem(is);
-				
-				
 				/** Remove diamond **/
 				
 				if(e.getPlayer().getItemInHand().getAmount() > 1) {
 					e.getPlayer().getItemInHand().setAmount(e.getPlayer().getItemInHand().getAmount() - 1);
+					e.getPlayer().getInventory().addItem(is);
 				} else {
-					e.getPlayer().setItemInHand(null);
+					e.getPlayer().setItemInHand(is);
 				}	 
 				
 				
@@ -116,7 +112,7 @@ public class ListenerInteract implements Listener {
 				
 				e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.LEVEL_UP, 1, 3);
 			} else {
-				p.sendMessage("§8» §7Du benötigst einen Diamanten in deiner Hand um einen Trank zu erwerben.");
+				p.sendMessage("§8» §7Du benötigst einen Diamanten in deiner Hand für einen Trank.");
 			}
 		}
 		
@@ -125,6 +121,7 @@ public class ListenerInteract implements Listener {
 		
 		if(e.getPlayer().getItemInHand() == null) return;
 		if(!e.getPlayer().getItemInHand().hasItemMeta()) return;
+		if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName() == null) return;
 		
 		if(e.getPlayer().getItemInHand().getItemMeta().getDisplayName().contains("Team Auswahl")) {
 			/** Open inventory **/

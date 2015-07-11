@@ -68,6 +68,11 @@ public class ListenerJoin implements Listener {
 		/** Lobby **/
 		
 		if(Main.getState() == GameState.LOBBY) {
+			/** Entities **/
+			
+			
+			
+			
 			/** Join message **/
 			
 			e.setJoinMessage("§8» §6" + p.getName() + " §7hat das Spiel betreten §8[" + Bukkit.getOnlinePlayers().size() + "/" + Bukkit.getMaxPlayers() + "]");
@@ -124,6 +129,20 @@ public class ListenerJoin implements Listener {
 				if(Game.spectators.contains(t.getName())) {
 					p.hidePlayer(p);
 				}
+			}
+			
+			
+			/** Killed **/
+			
+			if(!Main.killed) {
+				/** Killed **/
+				
+				Main.killed = true;
+				
+				
+				/** Entity **/
+				
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e");
 			}
 			
 			

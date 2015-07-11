@@ -52,7 +52,7 @@ public class ListenerDamage implements Listener {
 				/** Cooldown **/
 			
 				if(Game.cooldown.containsKey(p.getName())) {
-					if(System.currentTimeMillis() - Game.cooldown.get(p.getName()) >= Main.getSpawnCooldown());
+					if(System.currentTimeMillis() - Game.cooldown.get(p.getName()) <= Main.getSpawnCooldown()) e.setCancelled(true);
 				}
 			}
 		}

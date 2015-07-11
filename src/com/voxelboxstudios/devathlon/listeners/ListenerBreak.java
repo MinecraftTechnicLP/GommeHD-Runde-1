@@ -133,10 +133,18 @@ public class ListenerBreak implements Listener {
 					
 					l.getWorld().getBlockAt(l).setData(data);
 					
-					cancel();
-				} else {
+					
+					/** Cancel **/
 					
 					cancel();
+				} else {
+					/** Cancel **/
+					
+					cancel();
+					
+					
+					/** Respawn block **/
+					
 					respawnBlock(l, m, data);
 				}
 			}

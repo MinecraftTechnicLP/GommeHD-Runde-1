@@ -2,6 +2,10 @@ package com.voxelboxstudios.devathlon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 
 public class Worlds {
 	
@@ -31,6 +35,21 @@ public class Worlds {
 			
 			w.setStorm(false);
 			w.setThundering(false);
+			
+			
+			/** Remove items **/
+			
+			for(Item i : w.getEntitiesByClass(Item.class)) {
+				i.remove();
+			}
+			
+			for(Arrow i : w.getEntitiesByClass(Arrow.class)) {
+				i.remove();
+			}
+			
+			for(Entity e : w.getEntitiesByClass(ArmorStand.class)) {
+				e.remove();
+			}
 		}
 	}
 

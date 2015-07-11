@@ -11,6 +11,7 @@ respawntime:
 ingame:
      spawncooldown: 3000
      buildtime: 30
+     winningpoints: 8
 lobby:
      time: 60
      minimal-players: 8

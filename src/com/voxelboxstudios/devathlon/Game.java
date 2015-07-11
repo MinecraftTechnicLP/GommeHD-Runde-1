@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 
+import com.voxelboxstudios.devathlon.hologram.ArmorStandManager;
 import com.voxelboxstudios.devathlon.items.ItemUtil;
 import com.voxelboxstudios.devathlon.state.IngameState;
 import com.voxelboxstudios.devathlon.team.Team;
@@ -30,11 +33,21 @@ public class Game {
 	/** Spectators **/
 	
 	public static List<String> spectators = new ArrayList<String>();
+	
+	
+	/** Respawn **/
+	
+	public static Map<String, Location> respawn = new HashMap<String, Location>();
 
 	
 	/** Death **/
 	
 	public static void death(Player p) {
+		/** Check win **/
+		
+		if(checkWin()) return;
+		
+			
 		/** Check if player was arena player **/
 		
 		if(IngameState.arenas.contains(p)) {
@@ -79,11 +92,49 @@ public class Game {
 				p.sendMessage("§6§m---------------------------------");
 				
 				b.sendMessage("§6§m---------------------------------");
-				b.sendMessage("§8» §7Du bist nun der neue §6§lKämper§r§7.");
+				b.sendMessage("§8» §7Du bist nun der neue §6§lKämpfer§r§7.");
 				b.sendMessage("§8» §7Du musst nun mit den vorhandenen Materialien kämpfen!");
 				b.sendMessage("§6§m---------------------------------");
 				
+				
+				/** ArmorStand **/
+				
+				ArmorStandManager.TeamArmorStands.get(IngameState.team.get(p.getName())).setCustomName(IngameState.team.get(p.getName()).getChatColor() + b.getName());
+				
+				
+				/** Level **/
+				
+				b.setLevel(p.getLevel());
+				b.setExp(p.getExp());
+				
+				p.setLevel(0);
+				p.setExp(0f);
+				
+				
+				/** Teleport **/
+				
+				respawn.put(p.getName(), b.getLocation());
+				
+				
+				/** Cursors **/
+				
+				if(b.getItemOnCursor() != null) b.getInventory().addItem(b.getItemOnCursor());
+				if(p.getItemOnCursor() != null) p.getInventory().addItem(p.getItemOnCursor());
+				
+				b.setItemOnCursor(null);
+				p.setItemOnCursor(null);
+				
+				
+				/** Cooldown **/
+				
 				cooldown.put(b.getName(), System.currentTimeMillis());
+				
+				
+				/** Potions **/
+				
+				for(PotionEffect pe : b.getActivePotionEffects()) {
+					b.removePotionEffect(pe.getType());
+				}
 				
 				
 				/** Teleport **/
@@ -111,6 +162,19 @@ public class Game {
 				p.setGameMode(GameMode.SURVIVAL);
 			}
 		}
+	}
+	
+	
+	/** Check win **/
+	
+	public static boolean checkWin() {
+		for(Team t : Team.values()) {
+			if(points.get(t) == Main.getWinningPoints()) {
+				
+			}
+		}
+		
+		return false;
 	}
 	
 	

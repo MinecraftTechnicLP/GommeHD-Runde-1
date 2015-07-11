@@ -12,6 +12,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -41,11 +42,15 @@ public class IngameState {
 	public static List<Player> arenas = new ArrayList<Player>();
 	
 	
+	/** Dropped items **/
+	
+	public static Map<Item, String> dropped_items = new HashMap<Item, String>();
+	
+	
 	/** Safe Time **/
 	
 	public int buildtime;
-	
-	
+
 	/** Constructor **/
 	
 	public IngameState() {
@@ -128,19 +133,11 @@ public class IngameState {
 			}
 		}
 		
-		
-		/** Armor stands **/
+		/** Armor Stands **/
 		
 		for(Team tea : Team.values()) {
 			ArmorStandManager.spawnArmorStand(Main.getMap().getShopPositions().get(tea), tea);
-			ArmorStandManager.TeamArmorStands.get(tea).getNearbyEntities(1, 1, 1).removeAll(ArmorStandManager.TeamArmorStands.get(tea).getNearbyEntities(1, 1, 1));
 		}
-		
-		
-		/** Set state **/
-		
-		Main.setState(GameState.INGAME);
-		
 		
 		/** Loop through players **/
 		
@@ -178,6 +175,11 @@ public class IngameState {
 			/** Set exp **/
 			
 			p.setExp(0f);
+			
+			
+			/** Set state **/
+			
+			Main.setState(GameState.INGAME);
 			
 			
 			/** Armor content **/
@@ -257,8 +259,6 @@ public class IngameState {
 						p.setLevel(buildtime);
 						p.setExp((1f / Main.getBuildTime()) * buildtime);
 						
-						Bukkit.broadcastMessage("§cArmorStand Error: 404");
-						
 						/** Play sound **/
 							
 						if(buildtime % 5 == 0 || buildtime < 5) { 
@@ -315,7 +315,6 @@ public class IngameState {
 				}
 			}
 		}.runTaskTimer(Main.getPlugin(), 0L, 20L);
-		
 	}
 	
 	

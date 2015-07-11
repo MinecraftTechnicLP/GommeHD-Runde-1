@@ -16,6 +16,8 @@ public class ListenerIgnite implements Listener {
 		
 		if(!IngameState.arenas.contains(e.getPlayer())) {
 			e.setCancelled(true);
+		} else {
+			e.setCancelled(false);
 		}
 	}
 	

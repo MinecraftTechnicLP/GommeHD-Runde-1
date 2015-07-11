@@ -37,7 +37,7 @@ public class CommandStart implements CommandExecutor {
 		/** Check state **/
 		
 		if(Main.getState() == GameState.LOBBY) {
-			LobbyState.setCurrentTime(1);
+			LobbyState.setCurrentTime(8);
 		} else {
 			/** Send message **/
 			
