@@ -129,5 +129,5 @@ public class ListenerInteract implements Listener {
 			e.getPlayer().openInventory(TeamSelection.getInventory());
 		}
 	}
-	
+
 }

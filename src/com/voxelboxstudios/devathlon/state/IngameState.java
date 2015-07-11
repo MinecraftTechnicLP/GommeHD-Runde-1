@@ -315,6 +315,33 @@ public class IngameState {
 				}
 			}
 		}.runTaskTimer(Main.getPlugin(), 0L, 20L);
+		
+		
+		/** Scheduler **/
+		
+		new BukkitRunnable() {
+			public void run() {
+				/** Players **/
+				
+				for(Team t : Team.values()) {
+					/** Fighter **/
+					
+					Player p = t.getFighter();
+					
+					
+					/** Check if fighter isn't null **/
+					
+					if(p != null) {
+						ArmorStandManager.TeamArmorStands.get(IngameState.team.get(p.getName())).setHelmet(p.getInventory().getHelmet());
+						ArmorStandManager.TeamArmorStands.get(IngameState.team.get(p.getName())).setChestplate(p.getInventory().getChestplate());
+						ArmorStandManager.TeamArmorStands.get(IngameState.team.get(p.getName())).setLeggings(p.getInventory().getLeggings());
+						ArmorStandManager.TeamArmorStands.get(IngameState.team.get(p.getName())).setBoots(p.getInventory().getBoots());
+						
+						ArmorStandManager.TeamArmorStands.get(IngameState.team.get(p.getName())).setItemInHand(p.getItemInHand());
+					}
+				}
+			}
+		}.runTaskTimer(Main.getPlugin(), 10L, 10L);
 	}
 	
 	

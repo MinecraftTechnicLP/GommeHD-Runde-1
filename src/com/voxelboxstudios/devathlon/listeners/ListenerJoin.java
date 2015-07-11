@@ -142,7 +142,7 @@ public class ListenerJoin implements Listener {
 				
 				/** Entity **/
 				
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e");
+				new BukkitRunnable() { public void run() { Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e"); } }.runTaskLater(Main.getPlugin(), 20L);
 			}
 			
 			

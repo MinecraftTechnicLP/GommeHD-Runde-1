@@ -38,7 +38,7 @@ public class ListenerRespawn implements Listener {
 		if(Game.respawn.containsKey(e.getPlayer().getName())) {
 			/** Teleport **/
 			
-			e.getPlayer().teleport(Game.respawn.get(e.getPlayer().getName()));
+			e.setRespawnLocation(Game.respawn.get(e.getPlayer().getName()));
 			
 			
 			/** Remove **/

@@ -11,7 +11,7 @@ import com.voxelboxstudios.devathlon.team.Team;
  
 public class ArmorStandManager {
        
-public static HashMap<Team, ArmorStand> TeamArmorStands = new HashMap<>();
+	public static HashMap<Team, ArmorStand> TeamArmorStands = new HashMap<>();
 	
 	public static void spawnArmorStand(Location loc, Team team) {
                

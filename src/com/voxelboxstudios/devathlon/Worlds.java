@@ -2,9 +2,9 @@ package com.voxelboxstudios.devathlon;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 
 public class Worlds {
@@ -47,10 +47,22 @@ public class Worlds {
 				i.remove();
 			}
 			
-			for(Entity e : w.getEntitiesByClass(ArmorStand.class)) {
-				e.remove();
+			for(Entity e : w.getEntities()) {
+				if(e.getType() == EntityType.ARMOR_STAND){
+					e.remove();
+				}
 			}
+			
+			
+			/** Saving **/
+			
+			w.setAutoSave(false);
 		}
+		
+		
+		/** Entity **/
+		
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "kill @e");
 	}
 
 }

@@ -24,7 +24,7 @@ public class ListenerDamage implements Listener {
 		
 		/** Lobby **/
 		
-		if(Main.state == GameState.LOBBY) {
+		if(Main.state == GameState.LOBBY || Game.won) {
 			e.setCancelled(true);
 		} else {
 			/** Player **/

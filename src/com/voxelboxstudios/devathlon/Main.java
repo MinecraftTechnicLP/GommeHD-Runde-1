@@ -147,15 +147,18 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new ListenerPickup(), plugin);
 		pm.registerEvents(new ListenerDamageByEntity(), plugin);
 		pm.registerEvents(new ListenerItemMove(), plugin);
-		pm.registerEvents(new ListenerHolding(), plugin);
 		pm.registerEvents(new ListenerEntityInteract(), plugin);
-		pm.registerEvents(new ListenerClose(), plugin);
 		
 		
 		/** Commands **/
 		
 		getCommand("stats").setExecutor(new CommandStats());
 		getCommand("start").setExecutor(new CommandStart());
+		
+		
+		/** Auto save **/
+		
+		Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "save-off");
 		
 		
 		/** Respawn time **/
