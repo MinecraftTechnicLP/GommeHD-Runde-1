@@ -14,42 +14,30 @@ public enum Team {
 	
 	/** Enum **/
 
-	YELLOW, BLUE, GREEN, RED;
+	YELLOW(Color.YELLOW, "Â§e"),
+	BLUE(Color.BLUE, "Â§b"),
+	GREEN(Color.GREEN, "Â§a"),
+	RED(Color.RED, "Â§c");
 
+	private Color c;
+	private String cc;
+	
+	Team(Color c, String cc) {
+		this.c = c;
+		this.cc = cc;
+	}
 	
 	/** Get color **/
 	
 	public Color getColor() {
-		switch(this) {
-			default:
-				return Color.BLACK;
-			case YELLOW:
-				return Color.YELLOW;
-			case BLUE:
-				return Color.BLUE;
-			case GREEN:
-				return Color.GREEN;
-			case RED:
-				return Color.RED;
-		}
+		return c;
 	}
 	
 	
 	/** Get chat color **/
 	
 	public String getChatColor() {
-		switch(this) {
-			default:
-				return "§7";
-			case YELLOW:
-				return "§e";
-			case BLUE:
-				return "§b";
-			case GREEN:
-				return "§a";
-			case RED:
-				return "§c";
-		}
+		return cc;
 	}
 	
 	
